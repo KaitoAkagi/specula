@@ -1,10 +1,14 @@
-<html>
-<head><meta charset="UTF-8"><title> 使用者登録 </title></head>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Register</title>
+	<link rel="stylesheet" href="style.css">
+</head>
 <body>
 <h3> 使用者登録 </h3>
 <?php
-
-
     if(isset($_POST['register'])){
         $num = htmlspecialchars($_POST['num']);
         $name = htmlspecialchars($_POST['name']);
@@ -54,35 +58,22 @@
     }
 ?>
 
-    <form method="POST" action="">
-        <BR>
-        登録名：<BR>
-        <input type="text" name="name">
-        <BR>
-        サーバー名：<BR>
-        <?php
-        $server_num = [
-            '162'=>'162',
-            '164'=>'164',
-            '169'=>'169',
-            '175'=>'175',
-            '178'=>'178',
-            '186'=>'186',
-        ];
-        ?>
-
-        <select name="sever_name">
-            <option value="162">162</option>
-            <option value=164>164</option>
-            <option value=169>169</option>
-            <option value=175>175</option>
-            <option value=178>178</option>
-            <option value=186>186</option>
-        </select>
-        <BR>
-        <input type="submit" name="register" value="登録"> 
-        <input type="button" value="使用者リストに戻る" onClick="location.href='index2.php'">
-    </form>
+        <form method="POST" action="">
+            <p>サーバー名：
+            <!-- name="sever_name"を変更 -->
+            <select name="num">
+                <option value="162">162</option>
+                <option value=164>164</option>
+                <option value=169>169</option>
+                <option value=175>175</option>
+                <option value=178>178</option>
+                <option value=186>186</option>
+            </select>
+            </p>
+            <p>登録名:<input type="text" name="name"></p>
+            <input type="submit" name="register" value="登録" style="margin-top: 20px"> 
+            <input type="button" value="使用者リストに戻る" onClick="location.href='index.php'">
+        </form>
 
     </body>
 </html>
