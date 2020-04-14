@@ -19,7 +19,7 @@
 		$dbh->query('SET NAMES utf8'); //文字コードのための設定
 
 		// データベースserver_tableからすべてのデータを取り出し、番号の昇順にならべる
-		$sql = "SELECT num,name FROM server_table WHERE 1 ORDER BY num";
+		$sql = "SELECT num, name, status FROM server_table WHERE 1 ORDER BY num";
 		$stmt = $dbh->prepare($sql);
 		$stmt->execute();
 		$dbh = null; //データベースから切断
@@ -31,12 +31,31 @@
 		printf("<th> 削除 </th>");
 		print "</tr>";
 
+		if(isset($_GET["name"])){
+			$dbh = new PDO($dsn, $user, $password); //データベースに接続
+			$dbh->query('SET NAMES utf8'); //文字コードのための設定
+
+			$name = $_GET["name"];
+			$status = 1;
+			
+			#$sql = "UPDATE server_table SET status = :status WHERE name = $name";
+			$sql = "UPDATE server_table SET status = :status WHERE name = :name";
+			$res = $dbh->prepare($sql);
+			$params = array(':status'=>$status, ':name'=>$name);
+			$res->execute($params);
+			$dbh = null; //データベースから切断
+		}
+
 		while (true) {
 			$rec = $stmt->fetch(PDO::FETCH_BOTH); //データベースからデータを1つずつ取り出す
 			if ($rec == false) break; //データを取り出せなくなったらループ脱出
 			print "<tr>";
 			printf("<td> %s </td>", $rec["num"]);
-			printf("<td> %s </td>", $rec["name"]);
+			if ($rec["status"]==1) { //サーバー利用時は色を変える
+				printf("<td style='background-color: #78FF94;'> %s </td>", $rec["name"]);
+			} else {
+				printf("<td> %s </td>", $rec["name"]);
+			}
 			printf("<td><input type=\"button\" value=\"編集\" onClick=\"location.href='edit.php?name=%s'\"></td>", $rec["name"]);
 			printf("<td><input type=\"button\" value=\"削除\" onClick=\"location.href='delete.php?name=%s'\"></td>", $rec["name"]);
 			print "</tr>";

@@ -4,6 +4,21 @@ body {
 
 table {
     margin: 20px auto;
+    border-collapse: collapse;
+    /* border-spacing: 10px 0; */
+}
+
+table th {
+    background-color: #ccc;
+}
+
+table tr {
+    padding: 10px;
+    margin: 5px;
+}
+
+table tr:nth-child(odd){
+    background-color: #eee
 }
 
 h1 {
