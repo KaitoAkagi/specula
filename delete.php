@@ -11,12 +11,12 @@
 		if (isset($_GET["name"])) {
 			try {
 				$dsn = 'mysql:dbname=server;host=localhost';
-				$user = 'root';
+				$user_name = 'root';
 				$password = '';
-				$dbh = new PDO($dsn, $user, $password); //データベースに接続
+				$dbh = new PDO($dsn, $user_name, $password); //データベースに接続
 				$dbh->query('SET NAMES utf8'); //文字コードのための設定
 
-				$sql = "SELECT num,name FROM server_table WHERE 1";
+				$sql = "SELECT num, user FROM server_table WHERE 1";
 				$stmt = $dbh->prepare($sql);
 				$stmt->execute();
 				$dbh = null; //データベースから切断
@@ -25,13 +25,13 @@
 				exit();
 			}
 			foreach ($stmt as $row) {
-				if ($row['name'] == $_GET['name']) {
+				if ($row["user"] == $_GET["name"]) {
 					print "<h2>以下の登録を削除しますか？</h2>";
 					print "<table border=1 cellpadding=5>";
 					print "<tr><th> サーバー名 </td><th> 登録名 </td></tr>";
 					print "<tr>";
 					printf("<td> %s </td>", $row["num"]);
-					printf("<td> %s </td>", $row["name"]);
+					printf("<td> %s </td>", $row["user"]);
 					print "</tr>";
 					print "</table>";
 					print "<br>";
@@ -48,11 +48,9 @@
 				$dbh = new PDO($dsn, $user, $password); //データベースに接続
 				$dbh->query('SET NAMES utf8'); //文字コードのための設定
 
-				echo 'name:' . $name;
-				$sql = "DELETE FROM server_table WHERE name = :name";
+				$sql = "DELETE FROM server_table WHERE user = :user";
 				$stmt = $dbh->prepare($sql);
-				$data = array(':name' => $_GET['name']);
-				var_dump($data);
+				$data = array(':user' => $_GET['name']);
 				$stmt->execute($data);
 				$dbh = null; //データベースから切断
 				header("Location: index.php"); //削除作業後に利用者管理画面に戻る

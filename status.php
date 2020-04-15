@@ -7,79 +7,39 @@
 	<link rel="stylesheet" href="style.css">
 </head>
 <body>
-<h3> 使用者登録 </h3>
-<?php
-    if(isset($_POST['register'])){
-        $num = htmlspecialchars($_POST['num']);
-        $name = htmlspecialchars($_POST['name']);
-        if((!isset($num))or(!isset($name))){
-            echo '登録されていない項目があります<BR>';
-        }
-        else{
-            print "<hr>";
-            print "入力されたデータ<BR>";
-            print "<table border=1 cellpadding=5>";
-            print "<tr>";
-            printf("<th> サーバー名 </td>");
-            printf("<th> 登録名 </td>");
-            print "</tr>";
-            print "<tr>";
-            printf("<td> %s </td>", $num);
-            printf("<td> %s </td>", $name);
-            print "</tr>";
-            print "</table>";
-            
-            try{
-                $dsn = 'mysql:dbname=server;host=localhost';		$user = 'root';		$password = '';
-                $dbh = new PDO($dsn, $user, $password); //データベースに接続
+    <h1> 使用状況 </h1>
+        <?php
+            try {
+                $dsn = 'mysql:dbname=server;host=localhost';
+                $user_name = 'root';
+                $password = '';
+                $dbh = new PDO($dsn, $user_name, $password); //データベースに接続
                 $dbh->query('SET NAMES utf8'); //文字コードのための設定
-                print "<hr>";
-                
-                $sql = "SELECT num,name FROM server_table WHERE name='".$name."'";
+
+                // データベースserver_tableからすべてのデータを取り出し、番号の昇順にならべる
+                $sql = "SELECT num, user, status FROM server_table WHERE 1 ORDER BY num";
                 $stmt = $dbh->prepare($sql);
                 $stmt->execute();
-                if($stmt->fetch(PDO::FETCH_BOTH)!=false){
-                    print "この人物は既に登録済みです<hr>";
-                }else{
-                    $sql = "INSERT INTO server_table (num,name) values (?,?)";
-                    $stmt = $dbh->prepare($sql);
-                    $data[] = $num;
-                    $data[] = $name;
-                    $stmt->execute($data);
-                    print "データを登録しました<hr>";
-                } 	
-                $dbh = null; //データベースから切断	
-            }catch(Exception $e){
-                print 'サーバが停止しておりますので暫くお待ちください。';
-                exit();	
-            }
-        }
-    print '</select><br>';
-    }
-?>
+                $dbh = null; //データベースから切断
 
-        <form method="POST" action="">
-            <p>サーバー名：
-            <!-- name="sever_name"を変更 -->
-            <select name="num">
-                <option value="162">162</option>
-                <option value=164>164</option>
-                <option value=169>169</option>
-                <option value=175>175</option>
-                <option value=178>178</option>
-                <option value=186>186</option>
-            </select>
-            </p>
-            <p>登録名:
-                <select name="name">
-                    <option value="下本">下本</option>
-                    <option value="栗林">栗林</option>
-                    <option value="あ">あ</option>
-                </select>
-            </p>
-            <input type="submit" name="register" value="登録" style="margin-top: 20px"> 
-            <input type="button" value="使用者リストに戻る" onClick="location.href='index.php'">
-        </form>
+                printf("<form method='POST' action='index.php'>");
+                printf("<p>ユーザー名：");
+                printf("<select name='user'>");
+                while (true) {
+                    $rec = $stmt->fetch(PDO::FETCH_BOTH); //データベースからデータを1つずつ取り出す
+                    if ($rec == false) break; //データを取り出せなくなったらループ脱出
+                    printf("<option value='%s'>%s</option>",$rec["user"],$rec["user"]);                    
+                }
+                printf("</select>");
+                printf("</p>");
+                printf("<input type='submit' name='on' value='On'>");
+                printf("<input type='submit' name='off' value='Off'>");
+                printf("</form>");
+            } catch (Exception $e) {
+                print 'サーバが停止しておりますので暫くお待ちください。';
+                exit();
+            }
+        ?>
 
     </body>
 </html>
