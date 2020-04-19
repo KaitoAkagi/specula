@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title> 削除 </title>
-	<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> 削除 </title>
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-	<header>
-	</header>
-	<main>
-		<?php
+    <header>
+    </header>
+    <main>
+        <?php
 			if (isset($_GET["name"])) {
 				try {
 					$dsn = 'mysql:dbname=server;host=localhost';
@@ -19,7 +21,7 @@
 					$dbh = new PDO($dsn, $user_name, $password); //データベースに接続
 					$dbh->query('SET NAMES utf8'); //文字コードのための設定
 	
-					$sql = "SELECT num, user FROM server_table WHERE 1";
+					$sql = "SELECT ip, user FROM server_table WHERE 1";
 					$stmt = $dbh->prepare($sql);
 					$stmt->execute();
 					$dbh = null; //データベースから切断
@@ -33,7 +35,7 @@
 						print "<table border=1 cellpadding=5>";
 						print "<tr><th> サーバー名 </td><th> 登録名 </td></tr>";
 						print "<tr>";
-						printf("<td> %s </td>", $row["num"]);
+						printf("<td> %s </td>", $row["ip"]);
 						printf("<td> %s </td>", $row["user"]);
 						print "</tr>";
 						print "</table>";
@@ -64,13 +66,13 @@
 				}
 			}
 		?>
-		<form method="post" action="">
-			<input type="submit" name="delete" value="Yes">
-			<input type="button" value="No" onClick="location.href='index.php'">
-		</form>
-	</main>
-	<footer>
-	</footer>
+        <form method="post" action="">
+            <input type="submit" name="delete" value="Yes">
+            <input type="button" value="No" onClick="location.href='index.php'">
+        </form>
+    </main>
+    <footer>
+    </footer>
 </body>
 
 </html>

@@ -1,18 +1,20 @@
 <!DOCTYPE html>
 <html lang="ja">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Register</title>
-	<link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <header>
 
-    </header>
-    <main>
-        <h1> 使用状況の管理 </h1>
-        <?php
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <header>
+
+  </header>
+  <main>
+    <h1> 使用状況の管理 </h1>
+    <?php
             try {
                 $dsn = 'mysql:dbname=server;host=localhost';
                 $user_name = 'root';
@@ -21,7 +23,7 @@
                 $dbh->query('SET NAMES utf8'); //文字コードのための設定
 
                 // データベースserver_tableからすべてのデータを取り出し、番号の昇順にならべる
-                $sql = "SELECT num, user, status FROM server_table WHERE 1 ORDER BY num";
+                $sql = "SELECT ip, user, status FROM server_table WHERE 1 ORDER BY ip";
                 $stmt = $dbh->prepare($sql);
                 $stmt->execute();
                 $dbh = null; //データベースから切断
@@ -45,9 +47,9 @@
 					$dbh->query('SET NAMES utf8'); //文字コードのための設定
 		
 					$user = $_POST["user"];
-					if(isset($_POST["on"])){
+					if(isset($_POST["on"])){ //ONボタンを押したらサーバー利用開始
 						$status = 1;
-					} else if(isset($_POST["off"])){
+					} else if(isset($_POST["off"])){ //OFFボタンを押したらサーバー利用停止
 						$status = 0;
                     }
 					
@@ -65,11 +67,12 @@
                 exit();
             }
         ?>
-        <br>
-        <input type="button" value="登録者リストに戻る" onClick="location.href='index.php'">
-    </main>
-    <footer>
-    </footer>
+    <br>
+    <input type="button" value="登録者リストに戻る" onClick="location.href='index.php'">
+  </main>
+  <footer>
+  </footer>
 
-    </body>
+</body>
+
 </html>
