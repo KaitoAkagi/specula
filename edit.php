@@ -3,17 +3,21 @@
 
 <head>
   <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>編集画面</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
 
 <body>
-  <header>
-  </header>
+  <header></header>
   <main>
-    <h1>登録内容の編集</h1>
-    <?php
+    <div class="container">
+      <div class="text-center my-4">
+        <h1 class="mb-4">登録内容の編集</h1>
+      </div>
+      <?php
         
         try {
             $dsn = 'mysql:dbname=server;host=localhost';
@@ -51,21 +55,27 @@
 
             if (isset($_GET["name"])) {
                 print "<p>変更前</p>";
-                print "<table border=1 cellpadding=5>";
+                print "<div class='table-responsive'>";
+                print "<table class='table table-bordered table-striped'>";
+                print "<thead>";
                 print "<tr>";
-                printf("<th> サーバー名 </th>");
-                printf("<th> 登録名 </th>");
+                printf("<th>#</th>");
+                printf("<th>名前</th>");
                 print "</tr>";
-                
+                print "</thead>";
+                print "<tbody>";
+
                 foreach ($stmt_all as $row) {
                     if ($row["user"] == $_GET["name"]) {
                         print "<tr>";
-                        printf("<td> %s </td>", $row["ip"]);
-                        printf("<td> %s </td>", $row["user"]);
+                        printf("<th scope='row'> %s </th>", $row["ip"]);
+                        printf("<td>%s</td>", $row["user"]);
                         print "</tr>";
                     }
                 }
+                print "</tbody>";
                 print "</table>";
+                print "</div>";
             }
             
             printf("<form method='post' action=''>");
@@ -91,8 +101,9 @@
         
     ?>
 
-    <br>
-    <input type="button" value="登録者リストに戻る" onClick="location.href='index.php'">
+      <br>
+      <input type="button" value="登録者リストに戻る" onClick="location.href='index.php'">
+    </div>
 
   </main>
   <footer></footer>

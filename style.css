@@ -1,26 +1,26 @@
-body {
-    text-align: center;
-}
+/* body {
+  text-align: center;
+} */
 
-table {
-    margin: 20px auto;
-    border-collapse: collapse;
-    /* border-spacing: 10px 0; */
+/* table {
+  margin: 20px auto;
+  border-collapse: collapse;
+  border-spacing: 10px 0;
 }
 
 table th {
-    background-color: #ccc;
+  background-color: #ccc;
 }
 
 table tr {
-    padding: 10px;
-    margin: 5px;
+  padding: 10px;
+  margin: 5px;
 }
 
-table tr:nth-child(odd){
-    background-color: #eee
-}
+table tr:nth-child(odd) {
+  background-color: #eee;
+} */
 
-h1 {
-    margin-top: 10px;
-}
+/* h1 {
+  margin-top: 10px;
+} */
