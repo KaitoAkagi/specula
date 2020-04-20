@@ -73,6 +73,7 @@
           </div>
         </div>
 
+        <br>
         <div class="form-group row justify-content-center">
           <div>
             <button type="submit" class="btn btn-info" name="on">ON</button>
@@ -101,12 +102,17 @@
           header("Location: index.php"); //削除作業後に利用者管理画面に戻る
         }
       ?>
+
+      <div class="text-center" id="back-button">
+        <button type='button' class="btn btn-dark" onclick="location.href='./index.php'">戻る</button>
+      </div>
+
     </main>
   </div>
 
-  <footer class="footer">
+  <!-- <footer class="footer">
     <p class="text-muted text-center">Copyright(C) Akagi Kaito All Rights Reserved.</p>
-  </footer>
+  </footer> -->
 
 </body>
 

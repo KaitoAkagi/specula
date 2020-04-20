@@ -1,22 +1,19 @@
-/* body {
-  display: flex;
-  flex-flow: column;
-  min-height: 100vh;
-} */
+#title {
+  margin: 90px 0 90px 0;
+}
 
 .container {
   padding-bottom: 100px;
 }
 
-/* main {
-  flex: 1;
-} */
+#back-button {
+  margin-top: 80px;
+}
 
 footer {
-  /* margin-top: 100px; */
   margin-bottom: 0px;
   padding: 10px 0px;
   background-color: black;
-  /* bottom: 0px; */
   width: 100%;
 }
+

@@ -34,8 +34,8 @@
 
   <div class="container">
     <main>
-      <div class="text-center mt-5 mb-3">
-        <h2>登録者リスト</h2>
+      <div class="text-center" id="title">
+        <h1>Built for BisLab members.</h1>
       </div>
 
       <?php
@@ -45,23 +45,30 @@
                 $password = '';
                 $dbh = new PDO($dsn, $user_name, $password); //データベースに接続
                 $dbh->query('SET NAMES utf8'); //文字コードのための設定
-        
                 // データベースserver_tableからすべてのデータを取り出し、番号の昇順にならべる
                 $sql = "SELECT ip, user, status FROM server_table WHERE 1 ORDER BY ip";
                 $stmt = $dbh->prepare($sql);
                 $stmt->execute();
                 $dbh = null; //データベースから切断
-                print "<div class='table-responsive'>";
-                print "<table class='table table-bordered table-striped'>";
-                print "<thead>";
-                print "<tr>";
-                printf("<th>IP</th>");
-                printf("<th>名前</th>");
-                printf("<th>編集</th>");
-                printf("<th>削除</th>");
-                print "</tr>";
-                print "</thead>";
-                print "<tbody>";
+            } catch (Exception $e) {
+                print 'サーバが停止しておりますので暫くお待ちください。';
+                exit();
+            }
+      ?>
+
+      <!-- table -->
+      <div class='table-responsive'>
+        <table class='table table-bordered table-striped'>
+          <thead>
+            <tr>
+              <th>IP</th>
+              <th>名前</th>
+              <th>編集</th>
+              <th>削除</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php
                 while (true) {
                     $rec = $stmt->fetch(PDO::FETCH_BOTH); //データベースからデータを1つずつ取り出す
                     if ($rec == false) {
@@ -74,18 +81,16 @@
                     } else {
                         printf("<td> %s </td>", $rec["user"]);
                     }
-                    printf("<td><button type=\"button\" class=\"btn btn-info btn-sm \" onClick=\"location.href='edit.php?name=%s'\">編集</button></td>", $rec["user"]);
-                    printf("<td><button type=\"button\" class=\"btn btn-danger btn-sm\" onClick=\"location.href='delete.php?name=%s'\">削除</button></td>", $rec["user"]);
+                    printf("<td><button type=\"button\" class=\"btn btn-info btn-sm \"
+                  onClick=\"location.href='edit.php?name=%s' \">編集</button></td>", $rec["user"]);
+                    printf("<td><button type=\"button\" class=\"btn btn-danger btn-sm\"
+                  onClick=\"location.href='delete.php?name=%s' \">削除</button></td>", $rec["user"]);
                     print "</tr>";
                 }
-                print "</tbody>";
-                print "</table>";
-                print "</div>";
-            } catch (Exception $e) {
-                print 'サーバが停止しておりますので暫くお待ちください。';
-                exit();
-            }
-        ?>
+              ?>
+          </tbody>
+        </table>
+      </div>
     </main>
   </div>
 

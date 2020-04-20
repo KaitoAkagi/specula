@@ -32,7 +32,6 @@
   </header>
 
   <div class="container">
-
     <main>
       <div class="text-center mt-5 mb-3">
         <h2>新規登録</h2>
@@ -117,12 +116,17 @@
           </div>
         </div>
       </form>
+
+      <div class="text-center" id="back-button">
+        <button type='button' class="btn btn-dark" onclick="location.href='./index.php'">戻る</button>
+      </div>
     </main>
   </div>
 
-  <footer class="footer">
+
+  <!-- <footer class="footer">
     <p class="text-muted text-center">Copyright(C) Akagi Kaito All Rights Reserved.</p>
-  </footer>
+  </footer> -->
 </body>
 
 </html>

@@ -33,10 +33,10 @@
   </header>
 
   <div class="container">
-    <main>
 
+    <main>
       <div class="text-center mt-5 mb-3">
-        <h2>新規登録</h2>
+        <h2>編集</h2>
       </div>
 
       <?php
@@ -83,7 +83,7 @@
             print "<table class='table table-bordered table-striped'>";
             print "<thead>";
             print "<tr>";
-            printf("<th>#</th>");
+            printf("<th>IP</th>");
             printf("<th>名前</th>");
             print "</tr>";
             print "</thead>";
@@ -103,64 +103,43 @@
         }
       ?>
 
-      <form method="POST" action="" class="form-horizontal">
-        <div class='form-group'>
-          <label for='ip' class='col-sm-8 control-label'>IPを変更する</label>
-          <div class='col-cs-5'>
-            <select name='ip'>
-              <?php
-                while (true) {
-                    $rec = $stmt_ip->fetch(PDO::FETCH_BOTH);
-                    if ($rec == false) {
-                        break;
-                    }
-                    printf("<option value='%s'>%s</option>", $rec["ip"], $rec["ip"]);
-                }
-              ?>
-            </select>
-          </div>
-          <input type='submit' name='changeIp' value='変更'>
-        </div>
-        <div class='form-group'>
-          <label for='user' class='col-sm-8 control-label'>名前を変更する</label>
-          <div class='col-sm-12'>
-            <input type='text' class='form-control' id='user' name='user' placeholder='Name'>
-          </div>
-          <input type='submit' name='changeUser' value='変更'>
-        </div>
-        <br>
-        <div class='form-group'>
-          <div class='col-sm-offset-2 col-sm-10'>
-            <button type="submit" class="btn btn-success" name="register">登録</button>
-          </div>
-        </div>
-      </form>
-
-      <form method='post' action=''>
-        <p>サーバー名を変更する</p>
+      <br>
+      <hr>
+      <form method="POST" action="" class="form-inline">
+        <label for='exampleInputName2' class='col-sm-2 control-label'>IP</label>
         <select name='ip'>
           <?php
-          while (true) {
-              $rec = $stmt_ip->fetch(PDO::FETCH_BOTH);
-              if ($rec == false) {
-                  break;
+              while (true) {
+                  $rec = $stmt_ip->fetch(PDO::FETCH_BOTH);
+                  if ($rec == false) {
+                      break;
+                  }
+                  printf("<option value='%s'>%s</option>", $rec["ip"], $rec["ip"]);
               }
-              printf("<option value='%s'>%s</option>", $rec["ip"], $rec["ip"]);
-          }
           ?>
         </select>
-        <input type='submit' name='changeIp' value='変更'>
-        <p>登録名を変更する</p>
-        <input type='text' name='user'>
-        <input type='submit' name='changeUser' value='変更'>
+        <button type='submit' class="btn btn-success" style="margin-left: 10px;" name='changeIp'>変更</button>
       </form>
+
+      <br>
+
+      <form method="POST" action="" class="form-inline">
+        <label for='user' class='col-sm-2 control-label'>名前</label>
+        <input type='text' class='form-control col-sm-4' id='user' name='user' placeholder='Name'>
+        <button type='submit' class="btn btn-success" style="margin-left: 10px;" name='changeUser'>変更</button>
+      </form>
+
+      <div class="text-center" id="back-button">
+        <button type='button' class="btn btn-dark" onclick="location.href='./index.php'">戻る</button>
+      </div>
+
     </main>
   </div>
 
 
-  <footer class="footer">
+  <!-- <footer class="footer">
     <p class="text-muted text-center">Copyright(C) Akagi Kaito All Rights Reserved.</p>
-  </footer>
+  </footer> -->
 </body>
 
 </html>
