@@ -7,15 +7,16 @@
   <title> 削除 </title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-  <!-- <link rel="stylesheet" href="style.css"> -->
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
   <header>
   </header>
-  <main>
-    <div class="container">
 
+  <div class="container">
+
+    <main>
       <?php
         if (isset($_GET["name"])) {
             try {
@@ -42,7 +43,7 @@
                     print "<table class='table table-bordered table-striped'>";
                     print "<thead>";
                     print "<tr>";
-                    printf("<th>#</th>");
+                    printf("<th>IP</th>");
                     printf("<th>名前</th>");
                     print "</tr>";
                     print "</thead>";
@@ -84,17 +85,20 @@
     ?>
 
       <form method="post" action="">
-        <div class="form-group">
-          <input class="form-control" type="submit" name="delete" value="Yes">
-        </div>
-        <div class="form-group">
-          <input class="form-control" type="button" value="No" onClick="location.href='index.php'">
+        <div class="form-group row justify-content-center">
+          <div>
+            <button type="submit" class="btn btn-danger" name="delete">Delete</button>
+            <button type="button" class="btn btn-secondary" onClick="location.href='index.php'">Cancel</button>
+          </div>
         </div>
       </form>
-    </div>
-  </main>
-  <footer>
+    </main>
+  </div>
+
+  <footer class="footer">
+    <p class="text-muted text-center">Copyright(C) Akagi Kaito All Rights Reserved.</p>
   </footer>
+
 </body>
 
 </html>

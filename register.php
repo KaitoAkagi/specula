@@ -7,37 +7,60 @@
   <title>Register</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-
-  <!-- <link rel="stylesheet" href="style.css"> -->
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
   <header>
-  </header>
-  <main>
-    <div class="container">
-      <div class="text-center my-4">
-        <h1 class="mb-4">使用者登録</h1>
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark mb-3">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav4"
+        aria-controls="navbarNav4" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand" href="index.php">BisLab Server</a>
+      <div class="collapse navbar-collapse">
+        <ul class="navbar-nav">
+          <li class="nav-item active">
+            <a class="nav-link" href="register.php">新規登録</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="status.php">使用状況の管理</a>
+          </li>
+        </ul>
       </div>
+    </nav>
+  </header>
 
+  <div class="container">
+
+    <main>
+      <div class="text-center mt-5 mb-3">
+        <h2>新規登録</h2>
+      </div>
       <?php
         if (isset($_POST['register'])) {
-            $ip = htmlspecialchars($_POST['ip']);
-            $user = htmlspecialchars($_POST['user']);
-            if ((!isset($ip))or(!isset($user))) {
-                echo '登録されていない項目があります<BR>';
+            if (empty($_POST["ip"])) {
+                printf("<script>alert('IPを入力して下さい');</script>");
+            } else if (empty($_POST["user"])){
+                printf("<script>alert('名前を入力して下さい');</script>");
             } else {
+                $ip = htmlspecialchars($_POST['ip']);
+                $user = htmlspecialchars($_POST['user']);
                 print "<hr>";
-                print "入力されたデータ<BR>";
-                print "<table border=1 cellpadding=5>";
+                print "<div class='table-responsive'>";
+                print "<table class='table table-bordered table-striped'>";
+                print "<thead>";
                 print "<tr>";
-                printf("<th> サーバー名 </td>");
-                printf("<th> 登録名 </td>");
+                printf("<th>IP</th>");
+                printf("<th>名前</th>");
                 print "</tr>";
+                print "</thead>";
+                print "<tbody>";
                 print "<tr>";
-                printf("<td> %s </td>", $ip);
+                printf("<th scope='row'> %s </th>", $ip);
                 printf("<td> %s </td>", $user);
                 print "</tr>";
+                print "</tbody>";
                 print "</table>";
                     
                 try {
@@ -52,14 +75,17 @@
                     $stmt = $dbh->prepare($sql);
                     $stmt->execute();
                     if ($stmt->fetch(PDO::FETCH_BOTH)!=false) {
-                        print "この人物は既に登録済みです<hr>";
+                        printf("<script>alert('この人物は既に登録済みです');</script>");
                     } else {
                         $sql = "INSERT INTO server_table (ip,user) values (?,?)";
                         $stmt = $dbh->prepare($sql);
                         $data[] = $ip;
                         $data[] = $user;
                         $stmt->execute($data);
-                        print "データを登録しました<hr>";
+                        print "<div class='text-center'>";
+                        print "<p>データを登録しました</p>";
+                        print "</div>";
+                        print "<hr>";
                     }
                     $dbh = null; //データベースから切断
                 } catch (Exception $e) {
@@ -69,40 +95,34 @@
                 print '</select><br>';
             }
         }
-
         ?>
 
       <form method="POST" action="" class="form-horizontal">
         <div class='form-group'>
           <label for='exampleInputName2' class='col-sm-2 control-label'>IP</label>
-          <div class='col-sm-10'>
+          <div class='col-sm-12'>
             <input type='text' class='form-control' id='exampleInputName2' name='ip' placeholder='IP'>
           </div>
         </div>
         <div class='form-group'>
-          <label for='exampleInputName2' class='col-sm-2 control-label'>Name</label>
-          <div class='col-sm-10'>
+          <label for='exampleInputName2' class='col-sm-2 control-label'>名前</label>
+          <div class='col-sm-12'>
             <input type='text' class='form-control' id='exampleInputName2' name='user' placeholder='Name'>
           </div>
         </div>
+        <br>
         <div class='form-group'>
           <div class='col-sm-offset-2 col-sm-10'>
-            <input type='submit' name='register' value='登録'>
-          </div>
-        </div>
-        <div class='form-group'>
-          <div class='col-sm-offset-2 col-sm-10'>
-            <input type="button" value="登録者リストに戻る" onClick="location.href='index.php'">
+            <button type="submit" class="btn btn-success" name="register">登録</button>
           </div>
         </div>
       </form>
-    </div>
-  </main>
-  <footer>
+    </main>
+  </div>
 
+  <footer class="footer">
+    <p class="text-muted text-center">Copyright(C) Akagi Kaito All Rights Reserved.</p>
   </footer>
-
-
 </body>
 
 </html>

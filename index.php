@@ -8,18 +8,36 @@
   <title>BisLab Server</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-  <!-- <link rel="stylesheet" href="style.css"> -->
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
   <header>
-  </header>
-  <main>
-
-    <div class="container">
-      <div class="text-center my-4">
-        <h1 class="mb-4">登録者リスト</h1>
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark mb-3">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav4"
+        aria-controls="navbarNav4" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand" href="index.php">BisLab Server</a>
+      <div class="collapse navbar-collapse">
+        <ul class="navbar-nav">
+          <li class="nav-item active">
+            <a class="nav-link" href="register.php">新規登録</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="status.php">使用状況の管理</a>
+          </li>
+        </ul>
       </div>
+    </nav>
+  </header>
+
+  <div class="container">
+    <main>
+      <div class="text-center mt-5 mb-3">
+        <h2>登録者リスト</h2>
+      </div>
+
       <?php
             try {
                 $dsn = 'mysql:dbname=server;host=localhost';
@@ -37,7 +55,7 @@
                 print "<table class='table table-bordered table-striped'>";
                 print "<thead>";
                 print "<tr>";
-                printf("<th>#</th>");
+                printf("<th>IP</th>");
                 printf("<th>名前</th>");
                 printf("<th>編集</th>");
                 printf("<th>削除</th>");
@@ -56,8 +74,8 @@
                     } else {
                         printf("<td> %s </td>", $rec["user"]);
                     }
-                    printf("<td><input type=\"button\" value=\"編集\" onClick=\"location.href='edit.php?name=%s'\"></td>", $rec["user"]);
-                    printf("<td><input type=\"button\" value=\"削除\" onClick=\"location.href='delete.php?name=%s'\"></td>", $rec["user"]);
+                    printf("<td><button type=\"button\" class=\"btn btn-info btn-sm \" onClick=\"location.href='edit.php?name=%s'\">編集</button></td>", $rec["user"]);
+                    printf("<td><button type=\"button\" class=\"btn btn-danger btn-sm\" onClick=\"location.href='delete.php?name=%s'\">削除</button></td>", $rec["user"]);
                     print "</tr>";
                 }
                 print "</tbody>";
@@ -68,16 +86,11 @@
                 exit();
             }
         ?>
+    </main>
+  </div>
 
-      <br>
-      <div class="text-center my-4">
-        <input type="button" value="新規登録" onClick="location.href='register.php'">
-        <input type="button" value="使用状況の管理" onClick="location.href='status.php'">
-      </div>
-
-    </div>
-  </main>
-  <footer>
+  <footer class="footer">
+    <p class="text-muted text-center">Copyright(C) Akagi Kaito All Rights Reserved.</p>
   </footer>
 
 </body>
