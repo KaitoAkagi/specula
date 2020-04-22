@@ -35,7 +35,7 @@
   <div class="container">
 
     <main>
-      <div class="text-center mt-5 mb-3">
+      <div class="text-center mt-5 mb-5">
         <h2>編集</h2>
       </div>
 
@@ -129,9 +129,11 @@
         <button type='submit' class="btn btn-success" style="margin-left: 10px;" name='changeUser'>変更</button>
       </form>
 
-      <div class="text-center" id="back-button">
-        <button type='button' class="btn btn-dark" onclick="location.href='./index.php'">戻る</button>
-      </div>
+      <br>
+      <hr>
+      <br>
+
+      <button type='button' class="btn btn-dark float-left" onclick="location.href='./index.php'">戻る</button>
 
     </main>
   </div>

@@ -54,7 +54,7 @@
             
             foreach ($stmt as $row) {
                 if ($row["user"] == $_GET["name"]) {
-                    print "<div class='text-center mt-5 mb-3'>";
+                    print "<div class='text-center mt-5 mb-5'>";
                     print "<h2>以下の登録を削除しますか？</h2>";
                     print "</div>";
                     print "<div class='table-responsive'>";
@@ -102,11 +102,14 @@
                 
     ?>
 
+      <br>
+      <hr>
+      <br>
       <form method="post" action="">
-        <div class="form-group row justify-content-center">
-          <div>
-            <button type="submit" class="btn btn-danger" name="delete">Delete</button>
+        <div class='form-group'>
+          <div cass="form-inline">
             <button type="button" class="btn btn-secondary" onClick="location.href='index.php'">Cancel</button>
+            <button type="submit" class="btn btn-danger float-sm-right" name="delete">Delete</button>
           </div>
         </div>
       </form>

@@ -33,7 +33,7 @@
 
   <div class="container">
     <main>
-      <div class="text-center mt-5 mb-3">
+      <div class="text-center mt-5 mb-5">
         <h2>新規登録</h2>
       </div>
       <?php
@@ -106,28 +106,31 @@
 
       <form method="POST" action="" class="form-horizontal">
         <div class='form-group'>
-          <label for='exampleInputName2' class='col-sm-2 control-label'>IP</label>
-          <div class='col-sm-12'>
-            <input type='text' class='form-control' id='exampleInputName2' name='ip' placeholder='IP'>
+          <label for='ip' class='control-label'>IP</label>
+          <div>
+            <input type='text' class='form-control' id='ip' name='ip' placeholder='IP'>
           </div>
         </div>
         <div class='form-group'>
-          <label for='exampleInputName2' class='col-sm-2 control-label'>名前</label>
-          <div class='col-sm-12'>
-            <input type='text' class='form-control' id='exampleInputName2' name='user' placeholder='Name'>
+          <label for='user' class='control-label'>名前</label>
+          <div>
+            <input type='text' class='form-control' id='user' name='user' placeholder='Name'>
           </div>
         </div>
         <br>
+        <hr>
+        <br>
         <div class='form-group'>
-          <div class='col-sm-offset-2 col-sm-10'>
-            <button type="submit" class="btn btn-success" name="register">登録</button>
+          <div cass="form-inline">
+            <button type="submit" class="btn btn-success float-sm-right" name="register">登録</button>
+            <button type='button' class="btn btn-dark" onclick="location.href='./index.php'">戻る</button>
           </div>
         </div>
       </form>
 
-      <div class="text-center" id="back-button">
+      <!-- <div class="text-center" id="back-button">
         <button type='button' class="btn btn-dark" onclick="location.href='./index.php'">戻る</button>
-      </div>
+      </div> -->
     </main>
   </div>
 

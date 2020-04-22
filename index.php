@@ -97,7 +97,7 @@
     </main>
   </div>
 
-  <footer class=" footer">
+  <footer class="footer">
     <p class="text-muted text-center">Copyright(C) Akagi Kaito All Rights Reserved.</p>
   </footer>
 
