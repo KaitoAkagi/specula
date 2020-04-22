@@ -103,14 +103,14 @@
                 if ($rec == false) {
                     break;
                 } else {
-                    if ($rec["status"] == 1) {
+                    if (($rec["user"] != $_POST["user"])&&($rec["status"] == 1)) {
                         $judge = 1;
                     }
                 }
             }
           
             if (isset($_POST["on"])) { //ONボタンを押したらサーバー利用開始
-                if ($judge == 0) {
+                if ($judge == 0) { //同じサーバーの利用者が他にいなかったら
                     $status = 1;
                     header("Location: index.php"); //利用者管理画面に戻る
                 } else {

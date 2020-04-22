@@ -83,7 +83,7 @@
                     if ($rec["status"]==1) { //サーバー利用時は色を変える
                       printf("<td><i class=\"fas fa-circle\" style=\"color: #78FF94;\"></i></td>");
                     } else {
-                      printf("<td><i class=\"far fa-circle\"></i></td>");
+                      printf("<td><i class=\"fas fa-circle\" style=\"color: #FF0000;\"v></i></td>");
                     }
                     printf("<td>%s</td>", $rec["time"]);
                     printf("<td><i class=\"fas fa-edit\" style=\"cursor: pointer;\" onClick=\"location.href='edit.php?name=%s'\"></i>", $rec["user"]);
