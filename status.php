@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Register</title>
+  <title>使用状況の管理</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <link rel="stylesheet" href="style.css">
@@ -59,7 +59,7 @@
         <div class="form-group">
           <label for="name" class="control-label col-xs-2">名前</label>
           <div class="col-xs-5">
-            <select class="form-control" id="number" name="user">
+            <select class="form-control" id="user" name="user">
               <?php
                 while (true) {
                     $rec = $stmt->fetch(PDO::FETCH_BOTH); //データベースからデータを1つずつ取り出す
@@ -74,12 +74,8 @@
         </div>
 
         <br>
-        <div class="form-group row justify-content-center">
-          <div>
-            <button type="submit" class="btn btn-success" name="on">ON</button>
-            <button type="submit" class="btn btn-secondary" name="off">OFF</button>
-          </div>
-        </div>
+        <button type="submit" class="btn btn-info btn-block" name="on">ON</button>
+        <button type="submit" class="btn btn-secondary btn-block" name="off">OFF</button>
       </form>
 
       <?php
@@ -87,51 +83,52 @@
           
           // 送信されたユーザーが使用しているIPの番号を取得する処理
           $dbh = new PDO($dsn, $user_name, $password); //データベースに接続
-          $dbh->query('SET NAMES utf8'); //文字コードのための設定   
+          $dbh->query('SET NAMES utf8'); //文字コードのための設定
           $sql = "SELECT ip FROM server_table WHERE user = :user";
-          $stmt = $dbh->prepare($sql);  
-          $params = array(':user'=>$_POST["user"]);
-          $stmt->execute($params);
-          $rec = $stmt->fetch(PDO::FETCH_BOTH);
-          $ip = $rec["ip"];
+            $stmt = $dbh->prepare($sql);
+            $params = array(':user'=>$_POST["user"]);
+            $stmt->execute($params);
+            $rec = $stmt->fetch(PDO::FETCH_BOTH);
+            $ip = $rec["ip"];
           
-          // 同じIPのユーザー名をすべて取得し、statusを確認する
-          $sql = "SELECT user, status FROM server_table WHERE ip = :ip";
-          $stmt = $dbh->prepare($sql);  
-          $params = array(':ip'=>$ip);
-          $stmt->execute($params);
-          printf("%s",$ip);
+            // 同じIPのユーザー名をすべて取得し、statusを確認する
+            $sql = "SELECT user, status FROM server_table WHERE ip = :ip";
+            $stmt = $dbh->prepare($sql);
+            $params = array(':ip'=>$ip);
+            $stmt->execute($params);
           
-          $judge = 0; //同じサーバーを使用しているか判定する変数 0=未使用 1=使用
-          while (true) {
-            $rec = $stmt->fetch(PDO::FETCH_BOTH); //データベースからデータを1つずつ取り出す
-            if ($rec == false) {
-                break;
-            } else {
-              if($rec["status"] == 1){
-                $judge = 1;
-              }
-              printf("%d",$rec["status"]);
+            $judge = 0; //同じサーバーを使用しているか判定する変数 0=未使用 1=使用
+            while (true) {
+                $rec = $stmt->fetch(PDO::FETCH_BOTH); //データベースからデータを1つずつ取り出す
+                if ($rec == false) {
+                    break;
+                } else {
+                    if ($rec["status"] == 1) {
+                        $judge = 1;
+                    }
+                }
             }
-          }
           
-          if (isset($_POST["on"])) { //ONボタンを押したらサーバー利用開始
-            if ($judge == 0) {
-              $status = 1;
-            } else {
-              printf("<script>alert('同じサーバーを使用しているユーザーがいます');</script>");
-              $status = 0;
+            if (isset($_POST["on"])) { //ONボタンを押したらサーバー利用開始
+                if ($judge == 0) {
+                    $status = 1;
+                    header("Location: index.php"); //利用者管理画面に戻る
+                } else {
+                    printf("<script>window.onload = function() {
+                alert('同じサーバーを利用しているユーザーがいます');
+              }</script>");
+                    $status = 0;
+                }
+            } elseif (isset($_POST["off"])) { //OFFボタンを押したらサーバー利用停止
+                $status = 0;
+                header("Location: index.php"); //利用者管理画面に戻る
             }
-          } elseif (isset($_POST["off"])) { //OFFボタンを押したらサーバー利用停止
-            $status = 0;
-          }
           
-          $sql = "UPDATE server_table SET status = :status WHERE user = :user";
-          $res = $dbh->prepare($sql);  
-          $params = array(':status'=>$status, ':user'=>$_POST["user"]);
-          $res->execute($params);
-          $dbh = null; //データベースから切断
-          // header("Location: index.php"); //利用者管理画面に戻る
+            $sql = "UPDATE server_table SET status = :status WHERE user = :user";
+            $res = $dbh->prepare($sql);
+            $params = array(':status'=>$status, ':user'=>$_POST["user"]);
+            $res->execute($params);
+            $dbh = null; //データベースから切断
         }
       ?>
 

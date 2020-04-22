@@ -38,10 +38,18 @@
       </div>
       <?php
         if (isset($_POST['register'])) {
-            if (empty($_POST["ip"])) {
-                printf("<script>alert('IPを入力して下さい');</script>");
-            } else if (empty($_POST["user"])){
-                printf("<script>alert('名前を入力して下さい');</script>");
+            if (empty($_POST["ip"])&&(empty($_POST["user"]))) {
+                printf("<script>window.onload = function() {
+                  alert('IPと名前を入力して下さい');
+                  }</script>");
+            } elseif (empty($_POST["ip"])) {
+                printf("<script>window.onload = function() {
+                alert('IPを入力して下さい');
+                }</script>");
+            } elseif (empty($_POST["user"])) {
+                printf("<script>window.onload = function() {
+                alert('名前を入力して下さい');
+                }</script>");
             } else {
                 $ip = htmlspecialchars($_POST['ip']);
                 $user = htmlspecialchars($_POST['user']);

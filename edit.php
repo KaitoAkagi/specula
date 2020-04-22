@@ -106,8 +106,8 @@
       <br>
       <hr>
       <form method="POST" action="" class="form-inline">
-        <label for='exampleInputName2' class='col-sm-2 control-label'>IP</label>
-        <select name='ip'>
+        <label for='ip' class='col-sm-2 control-label'>IP</label>
+        <select class="form-control" id="ip" name='ip'>
           <?php
               while (true) {
                   $rec = $stmt_ip->fetch(PDO::FETCH_BOTH);

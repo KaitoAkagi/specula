@@ -8,6 +8,7 @@
   <title>BisLab Server</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 
@@ -63,6 +64,7 @@
             <tr>
               <th>IP</th>
               <th>名前</th>
+              <th>状態</th>
               <th>編集</th>
               <th>削除</th>
             </tr>
@@ -76,15 +78,14 @@
                     } //データを取り出せなくなったらループ脱出
                     print "<tr>";
                     printf("<th scope='row'>%s</th>", $rec["ip"]);
+                    printf("<td> %s </td>", $rec["user"]);
                     if ($rec["status"]==1) { //サーバー利用時は色を変える
-                        printf("<td style='background-color: #78FF94;'> %s </td>", $rec["user"]);
+                      printf("<td><i class=\"fas fa-circle\" style=\"color: #78FF94;\"></i></td>");
                     } else {
-                        printf("<td> %s </td>", $rec["user"]);
+                      printf("<td><i class=\"far fa-circle\"></i></td>");
                     }
-                    printf("<td><button type=\"button\" class=\"btn btn-info btn-sm \"
-                  onClick=\"location.href='edit.php?name=%s' \">編集</button></td>", $rec["user"]);
-                    printf("<td><button type=\"button\" class=\"btn btn-danger btn-sm\"
-                  onClick=\"location.href='delete.php?name=%s' \">削除</button></td>", $rec["user"]);
+                    printf("<td><i class=\"fas fa-edit\" style=\"cursor: pointer;\" onClick=\"location.href='edit.php?name=%s'\"></i>", $rec["user"]);
+                    printf("<td><i class=\"fas fa-trash\" style=\"cursor: pointer;\" onClick=\"location.href='delete.php?name=%s'\"></i></td>", $rec["user"]);
                     print "</tr>";
                 }
               ?>
