@@ -20,10 +20,10 @@
       <a class="navbar-brand" href="index.php">BisLab Server</a>
       <div class="collapse navbar-collapse">
         <ul class="navbar-nav">
-          <li class="nav-item active">
+          <li class="nav-item">
             <a class="nav-link" href="register.php">新規登録</a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item active">
             <a class="nav-link" href="status.php">使用状況の管理</a>
           </li>
         </ul>
@@ -45,7 +45,7 @@
                   $dbh = new PDO($dsn, $user_name, $password); //データベースに接続
                   $dbh->query('SET NAMES utf8'); //文字コードのための設定
                   
-                  $sql = "SELECT ip, user, status FROM server_table WHERE 1 ORDER BY ip";
+                  $sql = "SELECT user, status FROM server_table WHERE 1 ORDER BY ip";
                   $stmt = $dbh->prepare($sql);
                   $stmt->execute();
                   $dbh = null; //データベースから切断
@@ -76,7 +76,7 @@
         <br>
         <div class="form-group row justify-content-center">
           <div>
-            <button type="submit" class="btn btn-info" name="on">ON</button>
+            <button type="submit" class="btn btn-success" name="on">ON</button>
             <button type="submit" class="btn btn-secondary" name="off">OFF</button>
           </div>
         </div>
@@ -84,22 +84,54 @@
 
       <?php
         if (isset($_POST["user"])) {
-            $dbh = new PDO($dsn, $user_name, $password); //データベースに接続
-          $dbh->query('SET NAMES utf8'); //文字コードのための設定
-              
-          $user = $_POST["user"];
-            if (isset($_POST["on"])) { //ONボタンを押したらサーバー利用開始
-                $status = 1;
-            } elseif (isset($_POST["off"])) { //OFFボタンを押したらサーバー利用停止
-                $status = 0;
+          
+          // 送信されたユーザーが使用しているIPの番号を取得する処理
+          $dbh = new PDO($dsn, $user_name, $password); //データベースに接続
+          $dbh->query('SET NAMES utf8'); //文字コードのための設定   
+          $sql = "SELECT ip FROM server_table WHERE user = :user";
+          $stmt = $dbh->prepare($sql);  
+          $params = array(':user'=>$_POST["user"]);
+          $stmt->execute($params);
+          $rec = $stmt->fetch(PDO::FETCH_BOTH);
+          $ip = $rec["ip"];
+          
+          // 同じIPのユーザー名をすべて取得し、statusを確認する
+          $sql = "SELECT user, status FROM server_table WHERE ip = :ip";
+          $stmt = $dbh->prepare($sql);  
+          $params = array(':ip'=>$ip);
+          $stmt->execute($params);
+          printf("%s",$ip);
+          
+          $judge = 0; //同じサーバーを使用しているか判定する変数 0=未使用 1=使用
+          while (true) {
+            $rec = $stmt->fetch(PDO::FETCH_BOTH); //データベースからデータを1つずつ取り出す
+            if ($rec == false) {
+                break;
+            } else {
+              if($rec["status"] == 1){
+                $judge = 1;
+              }
+              printf("%d",$rec["status"]);
             }
-                      
-            $sql = "UPDATE server_table SET status = :status WHERE user = :user";
-            $res = $dbh->prepare($sql);
-            $params = array(':status'=>$status, ':user'=>$user);
-            $res->execute($params);
-            $dbh = null; //データベースから切断
-          header("Location: index.php"); //削除作業後に利用者管理画面に戻る
+          }
+          
+          if (isset($_POST["on"])) { //ONボタンを押したらサーバー利用開始
+            if ($judge == 0) {
+              $status = 1;
+            } else {
+              printf("<script>alert('同じサーバーを使用しているユーザーがいます');</script>");
+              $status = 0;
+            }
+          } elseif (isset($_POST["off"])) { //OFFボタンを押したらサーバー利用停止
+            $status = 0;
+          }
+          
+          $sql = "UPDATE server_table SET status = :status WHERE user = :user";
+          $res = $dbh->prepare($sql);  
+          $params = array(':status'=>$status, ':user'=>$_POST["user"]);
+          $res->execute($params);
+          $dbh = null; //データベースから切断
+          // header("Location: index.php"); //利用者管理画面に戻る
         }
       ?>
 

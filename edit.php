@@ -21,7 +21,7 @@
       <a class="navbar-brand" href="index.php">BisLab Server</a>
       <div class="collapse navbar-collapse">
         <ul class="navbar-nav">
-          <li class="nav-item active">
+          <li class="nav-item">
             <a class="nav-link" href="register.php">新規登録</a>
           </li>
           <li class="nav-item">
