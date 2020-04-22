@@ -47,7 +47,7 @@
                 $dbh = new PDO($dsn, $user_name, $password); //データベースに接続
                 $dbh->query('SET NAMES utf8'); //文字コードのための設定
                 // データベースserver_tableからすべてのデータを取り出し、番号の昇順にならべる
-                $sql = "SELECT ip, user, status FROM server_table WHERE 1 ORDER BY ip";
+                $sql = "SELECT ip, user, status, time FROM server_table WHERE 1 ORDER BY ip";
                 $stmt = $dbh->prepare($sql);
                 $stmt->execute();
                 $dbh = null; //データベースから切断
@@ -65,6 +65,7 @@
               <th>IP</th>
               <th>名前</th>
               <th>状態</th>
+              <th>ログイン日時</th>
               <th>編集</th>
               <th>削除</th>
             </tr>
@@ -84,6 +85,7 @@
                     } else {
                       printf("<td><i class=\"far fa-circle\"></i></td>");
                     }
+                    printf("<td>%s</td>", $rec["time"]);
                     printf("<td><i class=\"fas fa-edit\" style=\"cursor: pointer;\" onClick=\"location.href='edit.php?name=%s'\"></i>", $rec["user"]);
                     printf("<td><i class=\"fas fa-trash\" style=\"cursor: pointer;\" onClick=\"location.href='delete.php?name=%s'\"></i></td>", $rec["user"]);
                     print "</tr>";

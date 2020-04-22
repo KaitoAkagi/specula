@@ -85,50 +85,51 @@
           $dbh = new PDO($dsn, $user_name, $password); //データベースに接続
           $dbh->query('SET NAMES utf8'); //文字コードのための設定
           $sql = "SELECT ip FROM server_table WHERE user = :user";
-            $stmt = $dbh->prepare($sql);
-            $params = array(':user'=>$_POST["user"]);
-            $stmt->execute($params);
-            $rec = $stmt->fetch(PDO::FETCH_BOTH);
-            $ip = $rec["ip"];
+          $stmt = $dbh->prepare($sql);
+          $params = array(':user'=>$_POST["user"]);
+          $stmt->execute($params);
+          $rec = $stmt->fetch(PDO::FETCH_BOTH);
+          $ip = $rec["ip"];
           
-            // 同じIPのユーザー名をすべて取得し、statusを確認する
-            $sql = "SELECT user, status FROM server_table WHERE ip = :ip";
-            $stmt = $dbh->prepare($sql);
-            $params = array(':ip'=>$ip);
-            $stmt->execute($params);
+          // 同じIPのユーザー名をすべて取得し、statusを確認する
+          $sql = "SELECT user, status FROM server_table WHERE ip = :ip";
+          $stmt = $dbh->prepare($sql);
+          $params = array(':ip'=>$ip);
+          $stmt->execute($params);
           
-            $judge = 0; //同じサーバーを使用しているか判定する変数 0=未使用 1=使用
-            while (true) {
-                $rec = $stmt->fetch(PDO::FETCH_BOTH); //データベースからデータを1つずつ取り出す
-                if ($rec == false) {
-                    break;
-                } else {
-                    if ($rec["status"] == 1) {
-                        $judge = 1;
-                    }
-                }
-            }
+          $judge = 0; //同じサーバーを使用しているか判定する変数 0=未使用 1=使用
+          while (true) {
+              $rec = $stmt->fetch(PDO::FETCH_BOTH); //データベースからデータを1つず取り出す
+              if ($rec == false) {
+                  break;
+              } else {
+                  if ($rec["status"] == 1) {
+                      $judge = 1;
+                  }
+              }
+          }
           
-            if (isset($_POST["on"])) { //ONボタンを押したらサーバー利用開始
-                if ($judge == 0) {
-                    $status = 1;
-                    header("Location: index.php"); //利用者管理画面に戻る
-                } else {
-                    printf("<script>window.onload = function() {
-                alert('同じサーバーを利用しているユーザーがいます');
-              }</script>");
-                    $status = 0;
-                }
-            } elseif (isset($_POST["off"])) { //OFFボタンを押したらサーバー利用停止
-                $status = 0;
-                header("Location: index.php"); //利用者管理画面に戻る
-            }
+          if (isset($_POST["on"])) { //ONボタンを押したらサーバー利用開始
+              if ($judge == 0) {
+                  $status = 1;
+                  header("Location: index.php"); //利用者管理画面に戻る
+              } else {
+                  printf("<script>window.onload = function() {
+                    alert('同じサーバーを利用しているユーザーがいます');
+                    }</script>");
+                  $status = 0;
+              }
+          } elseif (isset($_POST["off"])) { //OFFボタンを押したらサーバー利用停止
+              $status = 0;
+              header("Location: index.php"); //利用者管理画面に戻る
+          }
           
-            $sql = "UPDATE server_table SET status = :status WHERE user = :user";
-            $res = $dbh->prepare($sql);
-            $params = array(':status'=>$status, ':user'=>$_POST["user"]);
-            $res->execute($params);
-            $dbh = null; //データベースから切断
+          $sql = "UPDATE server_table SET status = :status, time = :time WHERE user = :user";
+          $res = $dbh->prepare($sql);
+          date_default_timezone_set('Asia/Tokyo'); //東京の日付に合わせる
+          $params = array(':status'=>$status, ':time'=>date("Y/m/d H:i:s"),':user'=>$_POST["user"]);
+          $res->execute($params);
+          $dbh = null; //データベースから切断
         }
       ?>
 
