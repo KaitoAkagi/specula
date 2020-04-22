@@ -51,9 +51,10 @@
                 print 'サーバが停止しておりますので暫くお待ちください。';
                 exit();
             }
+            
             foreach ($stmt as $row) {
                 if ($row["user"] == $_GET["name"]) {
-                    print "<div class='text-center my-4'>";
+                    print "<div class='text-center mt-5 mb-3'>";
                     print "<h2>以下の登録を削除しますか？</h2>";
                     print "</div>";
                     print "<div class='table-responsive'>";
