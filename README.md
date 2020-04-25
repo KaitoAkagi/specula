@@ -6,12 +6,8 @@
 
 ## 2. 機能
 
-・登録機能
-・編集機能
-・削除機能
-・画面遷移
-・使用状況管理機能
+登録機能、編集機能、削除機能、画面遷移、使用状況管理機能
 
 ## 3. 使用技術
 
-HTML, CSS, Javascript, PHP, Bootstrap
+HTML、CSS、Javascript、PHP、Bootstrap
