@@ -40,6 +40,7 @@
       </div>
 
       <?php
+        
         try {
             $dsn = 'mysql:dbname=server;host=localhost';
             $user_name = 'root';
@@ -63,15 +64,19 @@
             
         //変更内容を反映させる
         if (isset($_POST["changeIp"])) {
+            $ip = htmlspecialchars($_POST["ip"]);
+            $user = htmlspecialchars($_GET["name"]);
             $sql_change = "UPDATE server_table SET ip = :ip WHERE user = :user";
             $res = $dbh->prepare($sql_change);
-            $params = array(':ip'=>$_POST["ip"], ':user'=>$_GET["name"]);
+            $params = array(':ip'=>$ip, ':user'=>$user);
             $res->execute($params);
             header("Location: index.php"); //削除作業後に利用者管理画面に戻る
         } elseif (isset($_POST["changeUser"])) {
+            $name = htmlspecialchars($_GET["name"]);
+            $user = htmlspecialchars($_POST["user"]);
             $sql_change = "UPDATE server_table SET user = :userAfter WHERE user = :userBefore";
             $res = $dbh->prepare($sql_change);
-            $params = array(':userBefore'=>$_GET["name"], ':userAfter'=>$_POST["user"]);
+            $params = array(':userBefore'=>$name, ':userAfter'=>$user);
             $res->execute($params);
             header("Location: index.php"); //削除作業後に利用者管理画面に戻る
         }

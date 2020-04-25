@@ -37,6 +37,7 @@
         <h2>新規登録</h2>
       </div>
       <?php
+      
         if (isset($_POST['register'])) {
             if (empty($_POST["ip"])&&(empty($_POST["user"]))) {
                 printf("<script>window.onload = function() {
@@ -64,7 +65,7 @@
                 print "</thead>";
                 print "<tbody>";
                 print "<tr>";
-                printf("<th scope='row'> %s </th>", $ip);
+                printf("<th scope='row'> %s </th>",$ip);
                 printf("<td> %s </td>", $user);
                 print "</tr>";
                 print "</tbody>";
@@ -75,8 +76,8 @@
                     $user_name = 'root';
                     $password = '';
                     $dbh = new PDO($dsn, $user_name, $password); //データベースに接続
-                        $dbh->query('SET NAMES utf8'); //文字コードのための設定
-                        print "<hr>";
+                    $dbh->query('SET NAMES utf8'); //文字コードのための設定
+                    print "<hr>";
                         
                     $sql = "SELECT ip, user FROM server_table WHERE user='".$user."'";
                     $stmt = $dbh->prepare($sql);
@@ -128,16 +129,9 @@
         </div>
       </form>
 
-      <!-- <div class="text-center" id="back-button">
-        <button type='button' class="btn btn-dark" onclick="location.href='./index.php'">戻る</button>
-      </div> -->
     </main>
   </div>
 
-
-  <!-- <footer class="footer">
-    <p class="text-muted text-center">Copyright(C) Akagi Kaito All Rights Reserved.</p>
-  </footer> -->
 </body>
 
 </html>

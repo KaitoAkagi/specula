@@ -39,24 +39,6 @@
         <h1>Built for BisLab members.</h1>
       </div>
 
-      <?php
-            try {
-                $dsn = 'mysql:dbname=server;host=localhost';
-                $user_name = 'root';
-                $password = '';
-                $dbh = new PDO($dsn, $user_name, $password); //データベースに接続
-                $dbh->query('SET NAMES utf8'); //文字コードのための設定
-                // データベースserver_tableからすべてのデータを取り出し、番号の昇順にならべる
-                $sql = "SELECT ip, user, status, time FROM server_table WHERE 1 ORDER BY ip";
-                $stmt = $dbh->prepare($sql);
-                $stmt->execute();
-                $dbh = null; //データベースから切断
-            } catch (Exception $e) {
-                print 'サーバが停止しておりますので暫くお待ちください。';
-                exit();
-            }
-      ?>
-
       <!-- table -->
       <div class='table-responsive'>
         <table class='table table-bordered table-striped'>
@@ -72,6 +54,22 @@
           </thead>
           <tbody>
             <?php
+            
+                try {
+                  $dsn = 'mysql:dbname=server;host=localhost';
+                  $username = 'root';
+                  $password = '';
+                  $dbh = new PDO($dsn, $username, $password); //データベースに接続
+                  $dbh->query('SET NAMES utf8'); //文字コードのための設定
+                  // データベースserver_tableからすべてのデータを取り出し、番号の昇順にならべる
+                  $sql = "SELECT ip, user, status, time FROM server_table WHERE 1 ORDER BY ip";
+                  $stmt = $dbh->prepare($sql);
+                  $stmt->execute();
+                  $dbh = null; //データベースから切断
+                } catch (Exception $e) {
+                  print 'サーバが停止しておりますので暫くお待ちください。';
+                }
+                
                 while (true) {
                     $rec = $stmt->fetch(PDO::FETCH_BOTH); //データベースからデータを1つずつ取り出す
                     if ($rec == false) {
