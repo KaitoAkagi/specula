@@ -18,7 +18,7 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <a class="navbar-brand" href="index.php">BisLab Server</a>
-      <div class="collapse navbar-collapse">
+      <div class="collapse navbar-collapse" id="navbarNav4">
         <ul class="navbar-nav">
           <li class="nav-item">
             <a class="nav-link" href="register.php">新規登録</a>
@@ -43,9 +43,9 @@
               $user_name = 'root';
               $password = '';
               $dbh = new PDO($dsn, $user_name, $password); //データベースに接続
-                  $dbh->query('SET NAMES utf8'); //文字コードのための設定
+              $dbh->query('SET NAMES utf8'); //文字コードのための設定
                   
-                  $sql = "SELECT user, status FROM user_table WHERE 1 ORDER BY ip";
+              $sql = "SELECT user, status FROM user_table WHERE 1 ORDER BY ip";
               $stmt = $dbh->prepare($sql);
               $stmt->execute();
               $dbh = null; //データベースから切断
@@ -144,6 +144,10 @@
   <!-- <footer class="footer">
     <p class="text-muted text-center">Copyright(C) Akagi Kaito All Rights Reserved.</p>
   </footer> -->
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"></script>
 
 </body>
 

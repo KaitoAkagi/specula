@@ -3,6 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Register</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
@@ -18,7 +19,7 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <a class="navbar-brand" href="index.php">BisLab Server</a>
-      <div class="collapse navbar-collapse">
+      <div class="collapse navbar-collapse" id="navbarNav4">
         <ul class="navbar-nav">
           <li class="nav-item active">
             <a class="nav-link" href="register.php">新規登録</a>
@@ -37,6 +38,7 @@
         <h2>新規登録</h2>
       </div>
       <?php
+      
         if (isset($_POST['register'])) {
             if (empty($_POST["ip"])&&(empty($_POST["user"]))) {
                 printf("<script>window.onload = function() {
@@ -64,7 +66,7 @@
                 print "</thead>";
                 print "<tbody>";
                 print "<tr>";
-                printf("<th scope='row'> %s </th>", $ip);
+                printf("<th scope='row'> %s </th>",$ip);
                 printf("<td> %s </td>", $user);
                 print "</tr>";
                 print "</tbody>";
@@ -75,8 +77,8 @@
                     $user_name = 'root';
                     $password = '';
                     $dbh = new PDO($dsn, $user_name, $password); //データベースに接続
-                        $dbh->query('SET NAMES utf8'); //文字コードのための設定
-                        print "<hr>";
+                    $dbh->query('SET NAMES utf8'); //文字コードのための設定
+                    print "<hr>";
                         
                     $sql = "SELECT ip, user FROM user_table WHERE user='".$user."'";
                     $stmt = $dbh->prepare($sql);
@@ -108,7 +110,7 @@
         <div class='form-group'>
           <label for='ip' class='control-label'>IP</label>
           <div>
-            <input type='text' class='form-control' id='ip' name='ip' placeholder='IP'>
+            <input type='number' min="0" class='form-control' id='ip' name='ip' placeholder='IP'>
           </div>
         </div>
         <div class='form-group'>
@@ -117,27 +119,26 @@
             <input type='text' class='form-control' id='user' name='user' placeholder='Name'>
           </div>
         </div>
+
+        <!-- <input type="reset" class="btn btn-light float-sm-left" value="リセット"> -->
         <br>
         <hr>
         <br>
         <div class='form-group'>
           <div cass="form-inline">
-            <button type="submit" class="btn btn-success float-sm-right" name="register">登録</button>
-            <button type='button' class="btn btn-dark" onclick="location.href='./index.php'">戻る</button>
+            <button type='button' class="btn btn-dark float-left" onclick="location.href='./index.php'">戻る</button>
+            <button type="submit" class="btn btn-success float-right offset-sm-8" name="register">登録</button>
           </div>
         </div>
       </form>
 
-      <!-- <div class="text-center" id="back-button">
-        <button type='button' class="btn btn-dark" onclick="location.href='./index.php'">戻る</button>
-      </div> -->
     </main>
   </div>
 
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"></script>
 
-  <!-- <footer class="footer">
-    <p class="text-muted text-center">Copyright(C) Akagi Kaito All Rights Reserved.</p>
-  </footer> -->
 </body>
 
 </html>

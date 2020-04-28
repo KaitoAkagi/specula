@@ -18,7 +18,7 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <a class="navbar-brand" href="index.php">BisLab Server</a>
-      <div class="collapse navbar-collapse">
+      <div class="collapse navbar-collapse" id="navbarNav4">
         <ul class="navbar-nav">
           <li class="nav-item">
             <a class="nav-link" href="register.php">新規登録</a>
@@ -55,7 +55,7 @@
             foreach ($stmt as $row) {
                 if ($row["user"] == $_GET["name"]) {
                     print "<div class='text-center mt-5 mb-5'>";
-                    print "<h2>以下の登録を削除しますか？</h2>";
+                    print "<h2>削除しますか？</h2>";
                     print "</div>";
                     print "<div class='table-responsive'>";
                     print "<table class='table table-bordered table-striped'>";
@@ -108,8 +108,8 @@
       <form method="post" action="">
         <div class='form-group'>
           <div cass="form-inline">
-            <button type="button" class="btn btn-secondary" onClick="location.href='index.php'">Cancel</button>
-            <button type="submit" class="btn btn-danger float-sm-right" name="delete">Delete</button>
+            <button type="button" class="btn btn-secondary float-left" onClick="location.href='index.php'">Cancel</button>
+            <button type="submit" class="btn btn-danger float-right" name="delete">Delete</button>
           </div>
         </div>
       </form>
@@ -120,6 +120,10 @@
   <!-- <footer class="footer">
     <p class="text-muted text-center">Copyright(C) Akagi Kaito All Rights Reserved.</p>
   </footer> -->
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"></script>
 
 </body>
 
