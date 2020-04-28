@@ -98,7 +98,9 @@
                     }
                     $dbh = null; //データベースから切断
                 } catch (Exception $e) {
-                    print 'サーバが停止しておりますので暫くお待ちください。';
+                    printf("<script>window.onload = function() {
+                    alert('サーバが停止しておりますので暫くお待ちください');
+                    }</script>");
                     exit();
                 }
                 print '</select><br>';
@@ -106,21 +108,20 @@
         }
         ?>
 
-      <form method="POST" action="" class="form-horizontal">
-        <div class='form-group'>
-          <label for='ip' class='control-label'>IP</label>
-          <div>
-            <input type='number' min="0" class='form-control' id='ip' name='ip' placeholder='IP'>
+      <form method="POST" action="">
+        <div class="form-group row">
+          <label for="ip" class="col-sm-2 col-form-label">IP</label>
+          <div class="col-sm-10">
+            <input type="number" min="0" class="form-control" id='ip' name='ip' placeholder='IP'>
           </div>
         </div>
-        <div class='form-group'>
-          <label for='user' class='control-label'>名前</label>
-          <div>
-            <input type='text' class='form-control' id='user' name='user' placeholder='Name'>
+        <div class="form-group row">
+          <label for="user" class="col-sm-2 col-form-label">名前</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id='user' name='user' placeholder='Name'>
           </div>
         </div>
 
-        <!-- <input type="reset" class="btn btn-light float-sm-left" value="リセット"> -->
         <br>
         <hr>
         <br>

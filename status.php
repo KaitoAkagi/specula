@@ -50,7 +50,9 @@
               $stmt->execute();
               $dbh = null; //データベースから切断
           } catch (Exception $e) {
-              print 'サーバが停止しておりますので暫くお待ちください。';
+              printf("<script>window.onload = function() {
+              alert('サーバが停止しておりますので暫くお待ちください');
+              }</script>");
               exit();
           }
       ?>

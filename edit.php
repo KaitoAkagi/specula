@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>編集画面</title>
+  <title>編集</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <link rel="stylesheet" href="style.css">
@@ -48,7 +48,9 @@
             $dbh = new PDO($dsn, $user_name, $password); //データベースに接続
             $dbh->query('SET NAMES utf8'); //文字コードのための設定
         } catch (Exception $e) {
-            print 'サーバが停止しておりますので暫くお待ちください。';
+            printf("<script>window.onload = function() {
+            alert('サーバが停止しておりますので暫くお待ちください');
+            }</script>");
             exit();
         }
 
@@ -61,54 +63,33 @@
         $sql_ip = "SELECT DISTINCT ip FROM user_table WHERE 1 ORDER BY ip";
         $stmt_ip = $dbh->prepare($sql_ip);
         $stmt_ip->execute();
-            
-        // //変更内容を反映させる
-        // if (isset($_POST["changeIp"])) {
-        //     $ip = htmlspecialchars($_POST["ip"]);
-        //     $user = htmlspecialchars($_GET["name"]);
-        //     $sql_change = "UPDATE user_table SET ip = :ip WHERE user = :user";
-        //     $res = $dbh->prepare($sql_change);
-        //     $params = array(':ip'=>$ip, ':user'=>$user);
-        //     $res->execute($params);
-        //     // header("Location: index.php"); //削除作業後に利用者管理画面に戻る
-        // } elseif (isset($_POST["changeUser"])) {
-        //     $name = htmlspecialchars($_GET["name"]);
-        //     $user = htmlspecialchars($_POST["user"]);
-        //     $sql_change = "UPDATE user_table SET user = :userAfter WHERE user = :userBefore";
-        //     $res = $dbh->prepare($sql_change);
-        //     $params = array(':userBefore'=>$name, ':userAfter'=>$user);
-        //     $res->execute($params);
-        //     // header("Location: index.php"); //削除作業後に利用者管理画面に戻る
-        // }
+
         $sql = "SELECT id FROM user_table WHERE 1 ORDER BY ip";
         $stmt = $dbh->prepare($sql_all);
         $stmt->execute();
 
         if (isset($_POST["change"])) {
+              $id = htmlspecialchars($_GET["name"]);
+              $ip = htmlspecialchars($_POST["ip"]);
+              $user = htmlspecialchars($_POST["user"]);
+
               if (empty($_POST["ip"])&&(empty($_POST["user"]))) {
                   printf("<script>window.onload = function() {
                     alert('IPか名前を入力して下さい');
                     }</script>");
               } else if (empty($_POST["user"])) {
-                $ip = htmlspecialchars($_POST["ip"]);
-                $id = htmlspecialchars($_GET["name"]);
                 $sql_change = "UPDATE user_table SET ip = :ip WHERE id = :id";
                 $res = $dbh->prepare($sql_change);
                 $params = array(':ip'=>$ip, ':id'=>$id);
                 $res->execute($params);
                 header("Location: index.php"); //削除作業後に利用者管理画面に戻る
               } else if (empty($_POST["ip"])) {
-                $id = htmlspecialchars($_GET["name"]);
-                $user = htmlspecialchars($_POST["user"]);
                 $sql_change = "UPDATE user_table SET user = :user WHERE id = :id";
                 $res = $dbh->prepare($sql_change);
                 $params = array(':id'=>$id, ':user'=>$user);
                 $res->execute($params);
                 header("Location: index.php"); //削除作業後に利用者管理画面に戻る    
               } else {
-                $id = htmlspecialchars($_GET["name"]);
-                $ip = htmlspecialchars($_POST["ip"]);
-                $user = htmlspecialchars($_POST["user"]);
                 $sql_change = "UPDATE user_table SET ip = :ip, user = :user WHERE id = :id";
                 $res = $dbh->prepare($sql_change);
                 $params = array(':id'=>$id, ':ip'=>$ip, ':user'=>$user);
