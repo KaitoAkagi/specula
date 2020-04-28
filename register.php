@@ -109,7 +109,7 @@
         <div class='form-group'>
           <label for='ip' class='control-label'>IP</label>
           <div>
-            <input type='text' class='form-control' id='ip' name='ip' placeholder='IP'>
+            <input type='number' min="0" class='form-control' id='ip' name='ip' placeholder='IP'>
           </div>
         </div>
         <div class='form-group'>
@@ -118,6 +118,8 @@
             <input type='text' class='form-control' id='user' name='user' placeholder='Name'>
           </div>
         </div>
+
+        <!-- <input type="reset" class="btn btn-light float-sm-left" value="リセット"> -->
         <br>
         <hr>
         <br>
