@@ -39,13 +39,13 @@
 
       <?php
           try {
-              $dsn = 'mysql:dbname=server;host=localhost';
+              $dsn = 'mysql:dbname=bislab;host=localhost';
               $user_name = 'root';
               $password = '';
               $dbh = new PDO($dsn, $user_name, $password); //データベースに接続
                   $dbh->query('SET NAMES utf8'); //文字コードのための設定
                   
-                  $sql = "SELECT user, status FROM server_table WHERE 1 ORDER BY ip";
+                  $sql = "SELECT user, status FROM user_table WHERE 1 ORDER BY ip";
               $stmt = $dbh->prepare($sql);
               $stmt->execute();
               $dbh = null; //データベースから切断
@@ -84,7 +84,7 @@
             // 送信されたユーザーが使用しているIPの番号を取得する処理
             $dbh = new PDO($dsn, $user_name, $password); //データベースに接続
             $dbh->query('SET NAMES utf8'); //文字コードのための設定
-            $sql = "SELECT ip FROM server_table WHERE user = :user";
+            $sql = "SELECT ip FROM user_table WHERE user = :user";
             $stmt = $dbh->prepare($sql);
             $params = array(':user'=>$_POST["user"]);
             $stmt->execute($params);
@@ -92,7 +92,7 @@
             $ip = $rec["ip"];
           
             // 同じIPのユーザー名をすべて取得し、statusを確認する
-            $sql = "SELECT user, status FROM server_table WHERE ip = :ip";
+            $sql = "SELECT user, status FROM user_table WHERE ip = :ip";
             $stmt = $dbh->prepare($sql);
             $params = array(':ip'=>$ip);
             $stmt->execute($params);
@@ -124,7 +124,7 @@
                 header("Location: index.php"); //利用者管理画面に戻る
             }
           
-            $sql = "UPDATE server_table SET status = :status, time = :time WHERE user = :user";
+            $sql = "UPDATE user_table SET status = :status, time = :time WHERE user = :user";
             $res = $dbh->prepare($sql);
             date_default_timezone_set('Asia/Tokyo'); //東京の日付に合わせる
             $params = array(':status'=>$status, ':time'=>date("Y/m/d H:i:s"),':user'=>$_POST["user"]);

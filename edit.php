@@ -41,7 +41,7 @@
 
       <?php
         try {
-            $dsn = 'mysql:dbname=server;host=localhost';
+            $dsn = 'mysql:dbname=bislab;host=localhost';
             $user_name = 'root';
             $password = '';
             $dbh = new PDO($dsn, $user_name, $password); //データベースに接続
@@ -52,24 +52,24 @@
         }
 
         // 全てのデータを取り出す
-        $sql_all = "SELECT ip, user FROM server_table WHERE 1 ORDER BY ip";
+        $sql_all = "SELECT ip, user FROM user_table WHERE 1 ORDER BY ip";
         $stmt_all = $dbh->prepare($sql_all);
         $stmt_all->execute();
 
         //ipだけ取り出す
-        $sql_ip = "SELECT DISTINCT ip FROM server_table WHERE 1 ORDER BY ip";
+        $sql_ip = "SELECT DISTINCT ip FROM user_table WHERE 1 ORDER BY ip";
         $stmt_ip = $dbh->prepare($sql_ip);
         $stmt_ip->execute();
             
         //変更内容を反映させる
         if (isset($_POST["changeIp"])) {
-            $sql_change = "UPDATE server_table SET ip = :ip WHERE user = :user";
+            $sql_change = "UPDATE user_table SET ip = :ip WHERE user = :user";
             $res = $dbh->prepare($sql_change);
             $params = array(':ip'=>$_POST["ip"], ':user'=>$_GET["name"]);
             $res->execute($params);
             header("Location: index.php"); //削除作業後に利用者管理画面に戻る
         } elseif (isset($_POST["changeUser"])) {
-            $sql_change = "UPDATE server_table SET user = :userAfter WHERE user = :userBefore";
+            $sql_change = "UPDATE user_table SET user = :userAfter WHERE user = :userBefore";
             $res = $dbh->prepare($sql_change);
             $params = array(':userBefore'=>$_GET["name"], ':userAfter'=>$_POST["user"]);
             $res->execute($params);

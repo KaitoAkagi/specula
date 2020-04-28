@@ -41,13 +41,13 @@
 
       <?php
             try {
-                $dsn = 'mysql:dbname=server;host=localhost';
+                $dsn = 'mysql:dbname=bislab;host=localhost';
                 $user_name = 'root';
                 $password = '';
                 $dbh = new PDO($dsn, $user_name, $password); //データベースに接続
                 $dbh->query('SET NAMES utf8'); //文字コードのための設定
                 // データベースserver_tableからすべてのデータを取り出し、番号の昇順にならべる
-                $sql = "SELECT ip, user, status, time FROM server_table WHERE 1 ORDER BY ip";
+                $sql = "SELECT ip, user, status, time FROM user_table WHERE 1 ORDER BY ip";
                 $stmt = $dbh->prepare($sql);
                 $stmt->execute();
                 $dbh = null; //データベースから切断

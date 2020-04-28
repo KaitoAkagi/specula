@@ -71,20 +71,20 @@
                 print "</table>";
                     
                 try {
-                    $dsn = 'mysql:dbname=server;host=localhost';
+                    $dsn = 'mysql:dbname=bislab;host=localhost';
                     $user_name = 'root';
                     $password = '';
                     $dbh = new PDO($dsn, $user_name, $password); //データベースに接続
                         $dbh->query('SET NAMES utf8'); //文字コードのための設定
                         print "<hr>";
                         
-                    $sql = "SELECT ip, user FROM server_table WHERE user='".$user."'";
+                    $sql = "SELECT ip, user FROM user_table WHERE user='".$user."'";
                     $stmt = $dbh->prepare($sql);
                     $stmt->execute();
                     if ($stmt->fetch(PDO::FETCH_BOTH)!=false) {
                         printf("<script>alert('この人物は既に登録済みです');</script>");
                     } else {
-                        $sql = "INSERT INTO server_table (ip,user) values (?,?)";
+                        $sql = "INSERT INTO user_table (ip,user) values (?,?)";
                         $stmt = $dbh->prepare($sql);
                         $data[] = $ip;
                         $data[] = $user;

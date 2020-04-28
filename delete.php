@@ -37,13 +37,13 @@
       <?php
         if (isset($_GET["name"])) {
             try {
-                $dsn = 'mysql:dbname=server;host=localhost';
+                $dsn = 'mysql:dbname=bislab;host=localhost';
                 $user_name = 'root';
                 $password = '';
                 $dbh = new PDO($dsn, $user_name, $password); //データベースに接続
                 $dbh->query('SET NAMES utf8'); //文字コードのための設定
                                 
-                $sql = "SELECT ip, user FROM server_table WHERE 1";
+                $sql = "SELECT ip, user FROM user_table WHERE 1";
                 $stmt = $dbh->prepare($sql);
                 $stmt->execute();
                 $dbh = null; //データベースから切断
@@ -81,13 +81,13 @@
         if (isset($_POST['delete'])) {
             $name = $_GET['name'];
             try {
-                $dsn = 'mysql:dbname=server;host=localhost';
+                $dsn = 'mysql:dbname=bislab;host=localhost';
                 $user = 'root';
                 $password = '';
                 $dbh = new PDO($dsn, $user, $password); //データベースに接続
                 $dbh->query('SET NAMES utf8'); //文字コードのための設定
             
-                $sql = "DELETE FROM server_table WHERE user = :user";
+                $sql = "DELETE FROM user_table WHERE user = :user";
                 $stmt = $dbh->prepare($sql);
                 $data = array(':user' => $_GET['name']);
                 $stmt->execute($data);
