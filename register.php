@@ -38,7 +38,8 @@
         <h2>新規登録</h2>
       </div>
       <?php
-      
+        require "function.php";
+
         if (isset($_POST['register'])) {
             if (empty($_POST["ip"])&&(empty($_POST["user"]))) {
                 printf("<script>window.onload = function() {
@@ -55,54 +56,38 @@
             } else {
                 $ip = htmlspecialchars($_POST['ip']);
                 $user = htmlspecialchars($_POST['user']);
-                print "<hr>";
-                print "<div class='table-responsive'>";
-                print "<table class='table table-bordered table-striped'>";
-                print "<thead>";
-                print "<tr>";
+                printf("<hr>");
+                printf("<div class='table-responsive'>");
+                printf("<table class='table table-bordered table-striped'>");
+                printf("<thead>");
+                printf("<tr>");
                 printf("<th>IP</th>");
                 printf("<th>名前</th>");
-                print "</tr>";
-                print "</thead>";
-                print "<tbody>";
-                print "<tr>";
+                print("</tr>");
+                print("</thead>");
+                print("<tbody>");
+                print("<tr>");
                 printf("<th scope='row'> %s </th>",$ip);
                 printf("<td> %s </td>", $user);
-                print "</tr>";
-                print "</tbody>";
-                print "</table>";
+                printf("</tr>");
+                printf("</tbody>");
+                printf("</table>");
                     
-                try {
-                    $dsn = 'mysql:dbname=bislab;host=localhost';
-                    $user_name = 'root';
-                    $password = '';
-                    $dbh = new PDO($dsn, $user_name, $password); //データベースに接続
-                    $dbh->query('SET NAMES utf8'); //文字コードのための設定
+                printf("<hr>");
+                    
+                $stmt = exeSQL("SELECT ip, user FROM user_table WHERE user='".$user."'");
+                
+                if ($stmt->fetch(PDO::FETCH_BOTH)!=false) {
+                    printf("<script>alert('この人物は既に登録済みです');</script>");
+                } else {
+                    $stmt = exeSQL("INSERT INTO user_table (ip,user) values ('".$ip."','".$user."')");
+                    print "<div class='text-center'>";
+                    print "<p>データを登録しました</p>";
+                    print "</div>";
                     print "<hr>";
-                        
-                    $sql = "SELECT ip, user FROM user_table WHERE user='".$user."'";
-                    $stmt = $dbh->prepare($sql);
-                    $stmt->execute();
-                    if ($stmt->fetch(PDO::FETCH_BOTH)!=false) {
-                        printf("<script>alert('この人物は既に登録済みです');</script>");
-                    } else {
-                        $sql = "INSERT INTO user_table (ip,user) values (?,?)";
-                        $stmt = $dbh->prepare($sql);
-                        $data[] = $ip;
-                        $data[] = $user;
-                        $stmt->execute($data);
-                        print "<div class='text-center'>";
-                        print "<p>データを登録しました</p>";
-                        print "</div>";
-                        print "<hr>";
-                    }
-                    $dbh = null; //データベースから切断
-                } catch (Exception $e) {
-                    printf("<script>window.onload = function() {
-                    alert('サーバが停止しておりますので暫くお待ちください');
-                    }</script>");
-                    exit();
                 }
+                $dbh = null; //データベースから切断
+                
                 print '</select><br>';
             }
         }

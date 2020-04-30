@@ -11,6 +11,7 @@
 </head>
 
 <body>
+  <!-- メニューバー -->
   <header>
     <nav class="navbar navbar-expand-sm navbar-dark bg-dark mb-3">
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav4"
@@ -35,71 +36,41 @@
 
     <main>
       <?php
-        if (isset($_GET["name"])) {
-            try {
-                $dsn = 'mysql:dbname=bislab;host=localhost';
-                $user_name = 'root';
-                $password = '';
-                $dbh = new PDO($dsn, $user_name, $password); //データベースに接続
-                $dbh->query('SET NAMES utf8'); //文字コードのための設定
-                                
-                $sql = "SELECT ip, user FROM user_table WHERE 1";
-                $stmt = $dbh->prepare($sql);
-                $stmt->execute();
-                $dbh = null; //データベースから切断
-            } catch (Exception $e) {
-                print 'サーバが停止しておりますので暫くお待ちください。';
-                exit();
-            }
-            
-            foreach ($stmt as $row) {
-                if ($row["user"] == $_GET["name"]) {
-                    print "<div class='text-center mt-5 mb-5'>";
-                    print "<h2>削除しますか？</h2>";
-                    print "</div>";
-                    print "<div class='table-responsive'>";
-                    print "<table class='table table-bordered table-striped'>";
-                    print "<thead>";
-                    print "<tr>";
-                    printf("<th>IP</th>");
-                    printf("<th>名前</th>");
-                    print "</tr>";
-                    print "</thead>";
-                    print "<tbody>";
-                    print "<tr>";
-                    printf("<th scope='row'>%s</th>", $row["ip"]);
-                    printf("<td>%s</td>", $row["user"]);
-                    print "</tr>";
-                    print "</tbody>";
-                    print "</table>";
-                    print "</div>";
-                    print "<br>";
-                }
-            }
+        require "function.php";
+
+        if (isset($_GET["name"])){
+          $id = htmlspecialchars($_GET["name"]);
+          $stmt = exeSQL("SELECT ip, user FROM user_table WHERE id = '".$id."'");
+          $rec = $stmt->fetch(PDO::FETCH_BOTH);
+
+          printf("<div class='text-center mt-5 mb-5'>");
+          printf("<h2>削除しますか？</h2>");
+          printf("</div>");
+          printf("<div class='table-responsive'>");
+          printf("<table class='table table-bordered table-striped'>");
+          printf("<thead>");
+          printf("<tr>");
+          printf("<th>IP</th>");
+          printf("<th>名前</th>");
+          printf("</tr>");
+          printf("</thead>");
+          printf("<tbody>");
+          printf("<tr>");
+          printf("<th scope='row'>%s</th>", $rec["ip"]);
+          printf("<td>%s</td>", $rec["user"]);
+          printf("</tr>");
+          printf("</tbody>");
+          printf("</table>");
+          printf("</div>");
+          printf("<br>");
+
+          if (isset($_POST["delete"])){
+            $stmt = exeSQL("DELETE FROM user_table WHERE id = '".$id."'");
+            header("Location: index.php"); //削除作業後に利用者管理画面に戻る
+            exit();
+          }
         }
-            
-        if (isset($_POST['delete'])) {
-            $name = $_GET['name'];
-            try {
-                $dsn = 'mysql:dbname=bislab;host=localhost';
-                $user = 'root';
-                $password = '';
-                $dbh = new PDO($dsn, $user, $password); //データベースに接続
-                $dbh->query('SET NAMES utf8'); //文字コードのための設定
-            
-                $sql = "DELETE FROM user_table WHERE user = :user";
-                $stmt = $dbh->prepare($sql);
-                $data = array(':user' => $_GET['name']);
-                $stmt->execute($data);
-                $dbh = null; //データベースから切断
-                header("Location: index.php"); //削除作業後に利用者管理画面に戻る
-                exit();
-            } catch (Exception $e) {
-                print 'サーバが停止しておりますので暫くお待ちください。';
-                exit();
-            }
-        }
-                
+
     ?>
 
       <br>
@@ -116,10 +87,6 @@
 
     </main>
   </div>
-
-  <!-- <footer class="footer">
-    <p class="text-muted text-center">Copyright(C) Akagi Kaito All Rights Reserved.</p>
-  </footer> -->
 
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>

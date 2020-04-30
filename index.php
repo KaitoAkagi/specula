@@ -13,6 +13,8 @@
 </head>
 
 <body>
+
+  <!-- メニューバー -->
   <header>
     <nav class="navbar navbar-expand-sm navbar-dark bg-dark mb-3">
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav4"
@@ -33,33 +35,14 @@
     </nav>
   </header>
 
+  <!-- main -->
   <div class="container">
     <main>
       <div class="text-center" id="title">
         <h1>Built for BisLab members.</h1>
       </div>
 
-      <?php
-            try {
-                $dsn = 'mysql:dbname=bislab;host=localhost';
-                $user_name = 'root';
-                $password = '';
-                $dbh = new PDO($dsn, $user_name, $password); //データベースに接続
-                $dbh->query('SET NAMES utf8'); //文字コードのための設定
-                // データベースserver_tableからすべてのデータを取り出し、番号の昇順にならべる
-                $sql = "SELECT ip, user, status, time FROM user_table WHERE 1 ORDER BY ip";
-                $stmt = $dbh->prepare($sql);
-                $stmt->execute();
-                $dbh = null; //データベースから切断
-            } catch (Exception $e) {
-                printf("<script>window.onload = function() {
-                alert('サーバが停止しておりますので暫くお待ちください');
-                }</script>");
-                exit();
-            }
-      ?>
-
-      <!-- table -->
+      <!-- サーバーの利用状況をテーブルで表示 -->
       <div class='table-responsive'>
         <table class='table table-bordered table-striped'>
           <thead>
@@ -74,39 +57,27 @@
           </thead>
           <tbody>
             <?php
-            
-                try {
-                  $dsn = 'mysql:dbname=bislab;host=localhost';
-                  $username = 'root';
-                  $password = '';
-                  $dbh = new PDO($dsn, $username, $password); //データベースに接続
-                  $dbh->query('SET NAMES utf8'); //文字コードのための設定
-                  // データベースserver_tableからすべてのデータを取り出し、番号の昇順にならべる
-                  $sql = "SELECT id, ip, user, status, time FROM user_table WHERE 1 ORDER BY ip";
-                  $stmt = $dbh->prepare($sql);
-                  $stmt->execute();
-                  $dbh = null; //データベースから切断
-                } catch (Exception $e) {
-                  print 'サーバが停止しておりますので暫くお待ちください。';
-                }
+                require "function.php";
+
+                $stmt = exeSQL("SELECT * FROM user_table WHERE 1 ORDER BY ip");
                 
                 while (true) {
                     $rec = $stmt->fetch(PDO::FETCH_BOTH); //データベースからデータを1つずつ取り出す
                     if ($rec == false) {
                         break;
                     } //データを取り出せなくなったらループ脱出
-                    print "<tr>";
+                    printf("<tr>");
                     printf("<th scope='row'>%s</th>", $rec["ip"]);
                     printf("<td> %s </td>", $rec["user"]);
-                    if ($rec["status"]==1) { //サーバー利用時は色を変える
+                    if ($rec["status"]==1) { //サーバー利用時は緑色
                       printf("<td><i class=\"fas fa-circle\" style=\"color: #78FF94;\"></i></td>");
-                    } else {
+                    } else { //未使用時は赤色
                       printf("<td><i class=\"fas fa-circle\" style=\"color: #FF0000;\"v></i></td>");
                     }
                     printf("<td>%s</td>", $rec["time"]);
                     printf("<td><i class=\"fas fa-edit\" style=\"cursor: pointer;\" onClick=\"location.href='edit.php?name=%s'\"></i>", $rec["id"]);
-                    printf("<td><i class=\"fas fa-trash\" style=\"cursor: pointer;\" onClick=\"location.href='delete.php?name=%s'\"></i></td>", $rec["user"]);
-                    print "</tr>";
+                    printf("<td><i class=\"fas fa-trash\" style=\"cursor: pointer;\" onClick=\"location.href='delete.php?name=%s'\"></i></td>", $rec["id"]);
+                    printf("</tr>");
                 }
               ?>
           </tbody>

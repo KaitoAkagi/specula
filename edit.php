@@ -40,94 +40,36 @@
       </div>
 
       <?php
-        
-        try {
-            $dsn = 'mysql:dbname=bislab;host=localhost';
-            $user_name = 'root';
-            $password = '';
-            $dbh = new PDO($dsn, $user_name, $password); //データベースに接続
-            $dbh->query('SET NAMES utf8'); //文字コードのための設定
-        } catch (Exception $e) {
-            printf("<script>window.onload = function() {
-            alert('サーバが停止しておりますので暫くお待ちください');
-            }</script>");
-            exit();
-        }
+        require "function.php";
 
-        // 全てのデータを取り出す
-        $sql_all = "SELECT id, ip, user FROM user_table WHERE 1 ORDER BY ip";
-        $stmt_all = $dbh->prepare($sql_all);
-        $stmt_all->execute();
-
-        //ipだけ取り出す
-        $sql_ip = "SELECT DISTINCT ip FROM user_table WHERE 1 ORDER BY ip";
-        $stmt_ip = $dbh->prepare($sql_ip);
-        $stmt_ip->execute();
-
-        $sql = "SELECT id FROM user_table WHERE 1 ORDER BY ip";
-        $stmt = $dbh->prepare($sql_all);
-        $stmt->execute();
-
-        if (isset($_POST["change"])) {
-              $id = htmlspecialchars($_GET["name"]);
-              $ip = htmlspecialchars($_POST["ip"]);
-              $user = htmlspecialchars($_POST["user"]);
-
-              if (empty($_POST["ip"])&&(empty($_POST["user"]))) {
-                  printf("<script>window.onload = function() {
-                    alert('IPか名前を入力して下さい');
-                    }</script>");
-              } else if (empty($_POST["user"])) {
-                $sql_change = "UPDATE user_table SET ip = :ip WHERE id = :id";
-                $res = $dbh->prepare($sql_change);
-                $params = array(':ip'=>$ip, ':id'=>$id);
-                $res->execute($params);
-                header("Location: index.php"); //削除作業後に利用者管理画面に戻る
-              } else if (empty($_POST["ip"])) {
-                $sql_change = "UPDATE user_table SET user = :user WHERE id = :id";
-                $res = $dbh->prepare($sql_change);
-                $params = array(':id'=>$id, ':user'=>$user);
-                $res->execute($params);
-                header("Location: index.php"); //削除作業後に利用者管理画面に戻る    
-              } else {
-                $sql_change = "UPDATE user_table SET ip = :ip, user = :user WHERE id = :id";
-                $res = $dbh->prepare($sql_change);
-                $params = array(':id'=>$id, ':ip'=>$ip, ':user'=>$user);
-                $res->execute($params);
-                header("Location: index.php"); //削除作業後に利用者管理画面に戻る
-              }
-        }
-            
-        $dbh = null; //データベースから切断
-
+        // 編集画面に遷移した後、編集する内容をテーブルで表示
         if (isset($_GET["name"])) {
-            print "<div class='table-responsive'>";
-            print "<table class='table table-bordered table-striped'>";
-            print "<thead>";
-            print "<tr>";
+            $id = htmlspecialchars($_GET["name"]);
+            $stmt = exeSQL("SELECT * FROM user_table WHERE id = '".$id."' ORDER BY ip");
+            $rec = $stmt->fetch(PDO::FETCH_BOTH);
+
+            printf("<div class='table-responsive'>");
+            printf("<table class='table table-bordered table-striped'>");
+            printf("<thead>");
+            printf("<tr>");
             printf("<th>IP</th>");
             printf("<th>名前</th>");
-            print "</tr>";
-            print "</thead>";
-            print "<tbody>";
-
-            foreach ($stmt_all as $row) {
-                if ($row["id"] == $_GET["name"]) {
-                    print "<tr>";
-                    printf("<th scope='row'> %s </th>", $row["ip"]);
-                    printf("<td>%s</td>", $row["user"]);
-                    print "</tr>";
-                }
-            }
-            print "</tbody>";
-            print "</table>";
-            print "</div>";
+            printf("</tr>");
+            printf("</thead>");
+            printf("<tbody>");
+            printf("<tr>");
+            printf("<th scope='row'> %s </th>", $rec["ip"]);
+            printf("<td>%s</td>", $rec["user"]);
+            printf("</tr>");
+            printf("</tbody>");
+            printf("</table>");
+            printf("</div>");
         }
+
       ?>
 
       <br>
       <hr>
-
       <br>
 
       <form method="POST" action="">
@@ -136,6 +78,9 @@
           <div class="col-sm-10">
             <select class="form-control" id="ip" name='ip'>
               <?php
+                //ipだけ取り出す（重複なし）
+                $stmt_ip = exeSQL("SELECT DISTINCT ip FROM user_table WHERE 1 ORDER BY ip");
+
                 printf("<option value=''></option>");
                 while (true) {
                   $rec = $stmt_ip->fetch(PDO::FETCH_BOTH);
@@ -165,13 +110,34 @@
         </div>
       </form>
 
+      <?php
+        if (isset($_POST["change"])) {
+          $ip = htmlspecialchars($_POST["ip"]); //変更前のip
+          $user = htmlspecialchars($_POST["user"]); //変更後の名前
+
+          // ipと名前が空欄のまま変更ボタンを押した場合
+          if (empty($_POST["ip"])&&(empty($_POST["user"]))) {
+              printf("<script>window.onload = function() {
+                alert('IPか名前を入力して下さい');
+                }</script>");
+          // 名前が空欄の場合、名前以外を変更
+          } else if (empty($user)) {
+            $stmt = exeSQL("UPDATE user_table SET ip = '".$ip."' WHERE id = '".$id."'");
+            header("Location: index.php");
+          // ipが空欄の場合、ip以外を変更
+          } else if (empty($ip)) {
+            $stmt = exeSQL("UPDATE user_table SET user = '".$user."' WHERE id = '".$id."'");
+            header("Location: index.php");
+          // 空欄がない場合、名前とipを変更
+          } else {
+            $stmt = exeSQL("UPDATE user_table SET ip = '".$ip."', user = '".$user."' WHERE id = '".$id."'");
+            header("Location: index.php");
+          }
+        }
+      ?>
     </main>
   </div>
 
-
-  <!-- <footer class="footer">
-    <p class="text-muted text-center">Copyright(C) Akagi Kaito All Rights Reserved.</p>
-  </footer> -->
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"></script>
