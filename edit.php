@@ -104,7 +104,7 @@
         
         <div class='form-group'>
           <div cass="form-inline">
-            <button type='button' class="btn btn-dark float-left" onclick="location.href='./index.php'">戻る</button>
+            <button type='button' class="btn btn-dark float-left" onclick="location.href='./index.html'">戻る</button>
             <button type='submit' class="btn btn-success float-right" style="margin-left: 10px;" name='change'>変更</button>
           </div>
         </div>
@@ -127,11 +127,11 @@
           // ipが空欄の場合、ip以外を変更
           } else if (empty($ip)) {
             $stmt = exeSQL("UPDATE user_table SET user = '".$user."' WHERE id = '".$id."'");
-            header("Location: index.php");
+            header("Location: index.html");
           // 空欄がない場合、名前とipを変更
           } else {
             $stmt = exeSQL("UPDATE user_table SET ip = '".$ip."', user = '".$user."' WHERE id = '".$id."'");
-            header("Location: index.php");
+            header("Location: index.html");
           }
         }
       ?>

@@ -18,7 +18,7 @@
         aria-controls="navbarNav4" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <a class="navbar-brand" href="index.php">BisLab Server</a>
+      <a class="navbar-brand" href="index.html">BisLab Server</a>
       <div class="collapse navbar-collapse" id="navbarNav4">
         <ul class="navbar-nav">
           <li class="nav-item active">
@@ -112,7 +112,7 @@
         <br>
         <div class='form-group'>
           <div cass="form-inline">
-            <button type='button' class="btn btn-dark float-left" onclick="location.href='./index.php'">戻る</button>
+            <button type='button' class="btn btn-dark float-left" onclick="location.href='./index.html'">戻る</button>
             <button type="submit" class="btn btn-success float-right offset-sm-8" name="register">登録</button>
           </div>
         </div>

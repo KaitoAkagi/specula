@@ -66,7 +66,7 @@
 
           if (isset($_POST["delete"])){
             $stmt = exeSQL("DELETE FROM user_table WHERE id = '".$id."'");
-            header("Location: index.php"); //削除作業後に利用者管理画面に戻る
+            header("Location: index.html"); //削除作業後に利用者管理画面に戻る
             exit();
           }
         }
@@ -79,7 +79,7 @@
       <form method="post" action="">
         <div class='form-group'>
           <div cass="form-inline">
-            <button type="button" class="btn btn-secondary float-left" onClick="location.href='index.php'">Cancel</button>
+            <button type="button" class="btn btn-secondary float-left" onClick="location.href='index.html'">Cancel</button>
             <button type="submit" class="btn btn-danger float-right" name="delete">Delete</button>
           </div>
         </div>

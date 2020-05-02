@@ -94,7 +94,7 @@
             if (isset($_POST["on"])) { //ONボタンを押したらサーバー利用開始
                 if ($isUse == false) { //同じサーバーの利用者が他にいなかったら
                     $status = 1;
-                    header("Location: index.php"); //利用者管理画面に戻る
+                    header("Location: index.html"); //利用者管理画面に戻る
                 } else {
                     printf("<script>window.onload = function() {
                     alert('同じサーバーを利用しているユーザーがいます');
@@ -103,7 +103,7 @@
                 }
             } elseif (isset($_POST["off"])) { //OFFボタンを押したらサーバー利用停止
                 $status = 0;
-                header("Location: index.php"); //利用者管理画面に戻る
+                header("Location: index.html"); //利用者管理画面に戻る
             }
 
             date_default_timezone_set('Asia/Tokyo'); //東京の日付に合わせる
@@ -115,7 +115,7 @@
       <br>
       <hr>
       <br>
-      <button type='button' class="btn btn-dark float-left" onclick="location.href='./index.php'">戻る</button>
+      <button type='button' class="btn btn-dark float-left" onclick="location.href='./index.html'">戻る</button>
 
     </main>
   </div>
