@@ -18,7 +18,7 @@
         aria-controls="navbarNav4" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <a class="navbar-brand" href="index.php">BisLab Server</a>
+      <a class="navbar-brand" href="index.html">BisLab Server</a>
       <div class="collapse navbar-collapse" id="navbarNav4">
         <ul class="navbar-nav">
           <li class="nav-item">

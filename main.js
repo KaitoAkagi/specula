@@ -1,21 +1,29 @@
+const url = 'dbconnect.php'; // web APIのURL
+const lists = document.getElementById('lists');
 const next = document.getElementById('next');
 const back = document.getElementById('back');
-let count = 0;
-
-const url = 'dbconnect.php';
-const lists = document.getElementById('lists');
+let count = 10;
 let lists_len = 0;
 
-// NEXT・BACKボタンで更新できるデータがあるか判定する関数
+// 更新できるテーブルがあるかによって、ボタンを表示・非表示にする関数
+// 例）count=10の場合、1から10番目のデータを表示
+// ここの処理はもう少しわかりやすくかけるかも
 function isUpdate() {
-  console.log(lists_len);
-  if (count === 0) {
-    back.style.display = 'none';
-    next.style.display = 'block';
-  } else if((count + 1) * 10 > lists_len){
+  if (count === 10) {
+    // 最初のテーブルデータ10個を表示している場合
+    back.style.display = 'none'; //戻るボタン非表示
+    if (lists_len <= 10) {
+      //データ数が10以下の場合
+      next.style.display = 'none'; //右矢印ボタンを非表示
+    } else {
+      next.style.display = 'block'; //右矢印ボタンを表示
+    }
+  } else if (count > lists_len) {
+    //表示できる次のデータがない場合
     back.style.display = 'block';
-    next.style.display = "none";
+    next.style.display = 'none';
   } else {
+    // 全てのボタンを表示
     back.style.display = 'block';
     next.style.display = 'block';
   }
@@ -25,14 +33,16 @@ function isUpdate() {
 async function callAPI() {
   const res = await fetch(url);
   const users = await res.json(); //json形式に変換
-  lists_len = users.length;
+  lists_len = users.length; //データの総数を変数lists_lenに格納
   createTable(users);
 }
 
 // テーブルを作成する関数
 function createTable(users) {
-  if(lists.textContent) lists.textContent = null;
-  for (let i = 10 * count; i < 10 * (count + 1); i++) {
+  // すでに表示してあるテーブルがある場合、そのテーブルを削除する
+  if (lists.textContent) lists.textContent = null;
+  // count-10から
+  for (let i = count - 10; i < count; i++) {
     if (i < users.length) {
       addList(users[i]);
     } else {
@@ -45,41 +55,45 @@ function createTable(users) {
 function addList(user) {
   const tr = document.createElement('tr');
 
-  const column = [];
+  //IP、ユーザー名、ログイン日時を格納
+  const column = []; 
   column.push(user.ip);
   column.push(user.user);
   column.push(user.time);
 
-  const td = Array(6);
-  const i = Array(3);
+  const td = Array(6); // tdタグを格納する配列
+  const i = Array(3); // iタグを格納する配列
 
+  // tdタグを作成
   for (let index = 0; index < td.length; index++) {
     td[index] = document.createElement('td');
   }
 
+  // iタグを作成
   for (let index = 0; index < i.length; index++) {
     i[index] = document.createElement('i');
   }
 
-  //   IP〜ログイン日時を表示
+  //   IP〜ログイン日時をtdタグで囲む
   for (let index = 0; index < column.length; index++) {
     td[index].innerText = column[index];
   }
 
-  // 状態ボタンを表示
+  // 状態ボタン●を表示
   i[0].classList.add('fas');
   i[0].classList.add('fa-circle');
-  if (user.status == 0) {
+  if (user.status == 0) { // statusが0の時、状態ボタン=赤
     i[0].style.color = '#FF0000';
-  } else {
+  } else { // statusが1の時、状態ボタン=緑
     i[0].style.color = '#78FF94';
   }
-  td[3].appendChild(i[0]);
+  td[3].appendChild(i[0]); //tdタグの下にiタグを入れる
 
   //   編集ボタンを表示
   i[1].classList.add('fas');
   i[1].classList.add('fa-edit');
   i[1].style.cursor = 'pointer';
+  // ボタンをタップしたらedit.phpに遷移
   i[1].addEventListener('click', function () {
     location.href = 'edit.php?name=' + user.id;
   });
@@ -106,14 +120,14 @@ callAPI(); //APIを叩く
 
 //NEXTボタンが押された時
 next.onclick = function () {
-  count++;
+  count += 10;
   isUpdate();
   callAPI();
 };
 
 //BACKボタンが押された時
 back.onclick = function () {
-  if (count > 0) count--;
+  if (count > 10) count -= 10;
   isUpdate();
   callAPI();
 };
