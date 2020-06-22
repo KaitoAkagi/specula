@@ -2,28 +2,24 @@ const url = 'dbconnect.php'; // web APIのURL
 const lists = document.getElementById('lists');
 const next = document.getElementById('next');
 const back = document.getElementById('back');
-let count = 10;
+let start = 0;
+let end = 10;
 let lists_len = 0;
 
 // 更新できるテーブルがあるかによって、ボタンを表示・非表示にする関数
-// 例）count=10の場合、1から10番目のデータを表示
 // ここの処理はもう少しわかりやすくかけるかも
 function isUpdate() {
-  if (count === 10) {
-    // 最初のテーブルデータ10個を表示している場合
+  if (start === 0){ // 最初のテーブルデータ10個を表示している場合
     back.style.display = 'none'; //戻るボタン非表示
-    if (lists_len <= 10) {
-      //データ数が10以下の場合
+    if (lists_len <= 10) { //データ数が10以下の場合
       next.style.display = 'none'; //右矢印ボタンを非表示
     } else {
       next.style.display = 'block'; //右矢印ボタンを表示
     }
-  } else if (count > lists_len) {
-    //表示できる次のデータがない場合
+  } else if (end > lists_len) {
     back.style.display = 'block';
     next.style.display = 'none';
   } else {
-    // 全てのボタンを表示
     back.style.display = 'block';
     next.style.display = 'block';
   }
@@ -38,15 +34,15 @@ async function callAPI() {
 }
 
 // テーブルを作成する関数
+// start+1番目からend-1番目のテーブルデータを表示する
 function createTable(users) {
   // すでに表示してあるテーブルがある場合、そのテーブルを削除する
   if (lists.textContent) lists.textContent = null;
-  // count-10から
-  for (let i = count - 10; i < count; i++) {
+  for (let i = start; i < end; i++) {
     if (i < users.length) {
       addList(users[i]);
     } else {
-      break;
+        break;
     }
   }
 }
@@ -120,14 +116,18 @@ callAPI(); //APIを叩く
 
 //NEXTボタンが押された時
 next.onclick = function () {
-  count += 10;
+  // 次の10個のテーブルデータを表示
+  start += 10;
+  end += 10;
   isUpdate();
   callAPI();
 };
 
 //BACKボタンが押された時
 back.onclick = function () {
-  if (count > 10) count -= 10;
+  // 前の10個のテーブルデータを表示
+  start -= 10;
+  end -= 10;
   isUpdate();
   callAPI();
 };

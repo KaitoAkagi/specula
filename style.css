@@ -1,9 +1,11 @@
-#title {
-  margin: 90px 0 90px 0;
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
-.container {
-  padding-bottom: 100px;
+main {
+  flex: 1 !important;
 }
 
 footer {
@@ -11,4 +13,12 @@ footer {
   padding: 10px 0px;
   background-color: black;
   width: 100%;
+}
+
+#title {
+  margin: 90px 0 90px 0;
+}
+
+.container {
+  padding-bottom: 100px;
 }
