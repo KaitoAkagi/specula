@@ -79,28 +79,31 @@
             // 同じIPのユーザー名をすべて取得し、statusを確認する
             $stmt = exeSQL("SELECT user, status FROM user_table WHERE ip = '".$ip."'");
           
-            $isUse = false; //同じサーバーを使用しているか判定する変数 0=未使用 1=使用
+            // $isUse = false; //同じサーバーを使用しているか判定する変数 0=未使用 1=使用
             while (true) {
                 $rec = $stmt->fetch(PDO::FETCH_BOTH); //データベースからデータを1つずつ取り出す
                 if ($rec == false) {
                     break;
-                } else {
-                    if (($rec["user"] != $user)&&($rec["status"] == 1)) {
-                        $isUse = true;
-                    }
-                }
+                } 
+                // else {
+                //     if (($rec["user"] != $user)&&($rec["status"] == 1)) {
+                //         $isUse = true;
+                //     }
+                // }
             }
           
             if (isset($_POST["on"])) { //ONボタンを押したらサーバー利用開始
-                if ($isUse == false) { //同じサーバーの利用者が他にいなかったら
-                    $status = 1;
-                    header("Location: index.html"); //利用者管理画面に戻る
-                } else {
-                    printf("<script>window.onload = function() {
-                    alert('同じサーバーを利用しているユーザーがいます');
-                    }</script>");
-                    $status = 0;
-                }
+                $status = 1;
+                header("Location: index.html"); //利用者管理
+                // if ($isUse == false) { //同じサーバーの利用者が他にいなかったら
+                //     $status = 1;
+                //     header("Location: index.html"); //利用者管理画面に戻る
+                // } else {
+                //     printf("<script>window.onload = function() {
+                //     alert('同じサーバーを利用しているユーザーがいます');
+                //     }</script>");
+                //     $status = 0;
+                // }
             } elseif (isset($_POST["off"])) { //OFFボタンを押したらサーバー利用停止
                 $status = 0;
                 header("Location: index.html"); //利用者管理画面に戻る

@@ -9,9 +9,11 @@ let lists_len = 0;
 // 更新できるテーブルがあるかによって、ボタンを表示・非表示にする関数
 // ここの処理はもう少しわかりやすくかけるかも
 function isUpdate() {
-  if (start === 0){ // 最初のテーブルデータ10個を表示している場合
+  if (start === 0) {
+    // 最初のテーブルデータ10個を表示している場合
     back.style.display = 'none'; //戻るボタン非表示
-    if (lists_len <= 10) { //データ数が10以下の場合
+    if (lists_len <= 10) {
+      //データ数が10以下の場合
       next.style.display = 'none'; //右矢印ボタンを非表示
     } else {
       next.style.display = 'block'; //右矢印ボタンを表示
@@ -42,7 +44,7 @@ function createTable(users) {
     if (i < users.length) {
       addList(users[i]);
     } else {
-        break;
+      break;
     }
   }
 }
@@ -52,7 +54,7 @@ function addList(user) {
   const tr = document.createElement('tr');
 
   //IP、ユーザー名、ログイン日時を格納
-  const column = []; 
+  const column = [];
   column.push(user.ip);
   column.push(user.user);
   column.push(user.time);
@@ -78,11 +80,17 @@ function addList(user) {
   // 状態ボタン●を表示
   i[0].classList.add('fas');
   i[0].classList.add('fa-circle');
-  if (user.status == 0) { // statusが0の時、状態ボタン=赤
+  if (user.status == 0) {
+    // statusが0の時、状態ボタン=赤
     i[0].style.color = '#FF0000';
-  } else { // statusが1の時、状態ボタン=緑
+  } else {
+    // statusが1の時、状態ボタン=緑
     i[0].style.color = '#78FF94';
   }
+  i[0].style.cursor = 'pointer';
+  i[0].addEventListener('click', function () {
+    location.href = 'status.php?name=' + user.id;
+  });
   td[3].appendChild(i[0]); //tdタグの下にiタグを入れる
 
   //   編集ボタンを表示
