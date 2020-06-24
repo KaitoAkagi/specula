@@ -10,8 +10,8 @@
 
 ## 3. 使用言語・技術
 
-フロントエンド：HTML、CSS、Javascript
-バックエンド：PHP
-フレームワーク：Bootstrap
-技術：Ajax
-開発環境：Visual Studio Code, Amazon Web Service, Apache Web Server, MySQL Databasem, phpMyAdmin
+フロントエンド：HTML、CSS、Javascript  
+バックエンド：PHP  
+フレームワーク：Bootstrap  
+技術：Ajax  
+開発環境：Visual Studio Code、Amazon Web Service、Apache Web Server、MySQL Databasem、phpMyAdmin
