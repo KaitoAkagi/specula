@@ -54,7 +54,7 @@
                     if ($rec == false) {
                         break;
                     } //データを取り出せなくなったらループ脱出
-                    printf("<option value='%s'>%s</option>", $rec["id"], $rec["user"]);
+                    printf("<option value='%s'>%s</option>", $rec["id"], $rec["name"]);
                 }
               ?>
             </select>
@@ -71,13 +71,13 @@
 
             // 送信されたidの名前とipを取得
             $id = htmlspecialchars($_POST["id"]);
-            $stmt = exeSQL("SELECT ip, user FROM user_table WHERE id = '".$id."'");
+            $stmt = exeSQL("SELECT ip, name FROM user_table WHERE id = '".$id."'");
             $rec = $stmt->fetch(PDO::FETCH_BOTH);
             $ip = $rec["ip"];
-            $user = $rec["user"];
+            $name = $rec["name"];
           
             // 同じIPのユーザー名をすべて取得し、statusを確認する
-            $stmt = exeSQL("SELECT user, status FROM user_table WHERE ip = '".$ip."'");
+            $stmt = exeSQL("SELECT name, status FROM user_table WHERE ip = '".$ip."'");
           
             // $isUse = false; //同じサーバーを使用しているか判定する変数 0=未使用 1=使用
             while (true) {
@@ -86,7 +86,7 @@
                     break;
                 } 
                 // else {
-                //     if (($rec["user"] != $user)&&($rec["status"] == 1)) {
+                //     if (($rec["name"] != $name)&&($rec["status"] == 1)) {
                 //         $isUse = true;
                 //     }
                 // }
@@ -113,6 +113,32 @@
             $time = date("Y/m/d H:i:s");
             $stmt = exeSQL("UPDATE user_table SET status = '".$status."', time = '".$time."' WHERE id = '".$id."'");
         }
+
+        if (isset($_GET["id"])) {
+          // 送信されたidの名前とipを取得
+          $id = htmlspecialchars($_GET["id"]);
+          $stmt = exeSQL("SELECT status FROM user_table WHERE id = '".$id."'");
+          $rec = $stmt->fetch(PDO::FETCH_BOTH);
+          $status = $rec["status"];
+
+          if($status == 0) $status = 1;
+          else $status = 0;
+
+          // $isUse = false; //同じサーバーを使用しているか判定する変数 0=未使用 1=使用
+
+          while (true) {
+              $rec = $stmt->fetch(PDO::FETCH_BOTH); //データベースからデータを1つずつ取り出す
+              if ($rec == false) {
+                  break;
+              } 
+          }
+
+          date_default_timezone_set('Asia/Tokyo'); //東京の日付に合わせる
+          $time = date("Y/m/d H:i:s");
+          $stmt = exeSQL("UPDATE user_table SET status = '".$status."', time = '".$time."' WHERE id = '".$id."'");
+
+          header("Location: index.html");//ホームページに戻る
+      }
       ?>
 
       <br>

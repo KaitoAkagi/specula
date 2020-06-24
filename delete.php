@@ -40,7 +40,7 @@
 
         if (isset($_GET["name"])){
           $id = htmlspecialchars($_GET["name"]);
-          $stmt = exeSQL("SELECT ip, user FROM user_table WHERE id = '".$id."'");
+          $stmt = exeSQL("SELECT ip, name FROM user_table WHERE id = '".$id."'");
           $rec = $stmt->fetch(PDO::FETCH_BOTH);
 
           printf("<div class='text-center mt-5 mb-5'>");
@@ -57,7 +57,7 @@
           printf("<tbody>");
           printf("<tr>");
           printf("<td>%s</td>", $rec["ip"]);
-          printf("<td>%s</td>", $rec["user"]);
+          printf("<td>%s</td>", $rec["name"]);
           printf("</tr>");
           printf("</tbody>");
           printf("</table>");

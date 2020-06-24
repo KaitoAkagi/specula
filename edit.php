@@ -59,7 +59,7 @@
             printf("<tbody>");
             printf("<tr>");
             printf("<td> %s </td>", $rec["ip"]);
-            printf("<td>%s</td>", $rec["user"]);
+            printf("<td>%s</td>", $rec["name"]);
             printf("</tr>");
             printf("</tbody>");
             printf("</table>");
@@ -94,9 +94,9 @@
           </div>
         </div>
         <div class="form-group row">
-          <label for="user" class="col-sm-2 col-form-label">名前</label>
+          <label for="name" class="col-sm-2 col-form-label">名前</label>
           <div class="col-sm-10">
-            <input type="text" class="form-control" id='user' name='user' placeholder='Name'>
+            <input type="text" class="form-control" id='name' name='name' placeholder='Name'>
           </div>
         </div>
 
@@ -113,24 +113,24 @@
       <?php
         if (isset($_POST["change"])) {
           $ip = htmlspecialchars($_POST["ip"]); //変更前のip
-          $user = htmlspecialchars($_POST["user"]); //変更後の名前
+          $name = htmlspecialchars($_POST["name"]); //変更後の名前
 
           // ipと名前が空欄のまま変更ボタンを押した場合
-          if (empty($_POST["ip"])&&(empty($_POST["user"]))) {
+          if (empty($_POST["ip"])&&(empty($_POST["name"]))) {
               printf("<script>window.onload = function() {
                 alert('IPか名前を入力して下さい');
                 }</script>");
           // 名前が空欄の場合、名前以外を変更
-          } else if (empty($user)) {
+          } else if (empty($name)) {
             $stmt = exeSQL("UPDATE user_table SET ip = '".$ip."' WHERE id = '".$id."'");
-            header("Location: index.php");
+            header("Location: index.html");
           // ipが空欄の場合、ip以外を変更
           } else if (empty($ip)) {
-            $stmt = exeSQL("UPDATE user_table SET user = '".$user."' WHERE id = '".$id."'");
+            $stmt = exeSQL("UPDATE user_table SET name = '".$name."' WHERE id = '".$id."'");
             header("Location: index.html");
           // 空欄がない場合、名前とipを変更
           } else {
-            $stmt = exeSQL("UPDATE user_table SET ip = '".$ip."', user = '".$user."' WHERE id = '".$id."'");
+            $stmt = exeSQL("UPDATE user_table SET ip = '".$ip."', name = '".$name."' WHERE id = '".$id."'");
             header("Location: index.html");
           }
         }

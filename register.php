@@ -41,7 +41,7 @@
         require "function.php";
 
         if (isset($_POST['register'])) {
-            if (empty($_POST["ip"])&&(empty($_POST["user"]))) {
+            if (empty($_POST["ip"])&&(empty($_POST["name"]))) {
                 printf("<script>window.onload = function() {
                   alert('IPと名前を入力して下さい');
                   }</script>");
@@ -49,13 +49,13 @@
                 printf("<script>window.onload = function() {
                 alert('IPを入力して下さい');
                 }</script>");
-            } elseif (empty($_POST["user"])) {
+            } elseif (empty($_POST["name"])) {
                 printf("<script>window.onload = function() {
                 alert('名前を入力して下さい');
                 }</script>");
             } else {
                 $ip = htmlspecialchars($_POST['ip']);
-                $user = htmlspecialchars($_POST['user']);
+                $name = htmlspecialchars($_POST['name']);
                 printf("<hr>");
                 printf("<div class='table-responsive'>");
                 printf("<table class='table table-bordered table-striped'>");
@@ -68,19 +68,19 @@
                 print("<tbody>");
                 print("<tr>");
                 printf("<th scope='row'> %s </th>",$ip);
-                printf("<td> %s </td>", $user);
+                printf("<td> %s </td>", $name);
                 printf("</tr>");
                 printf("</tbody>");
                 printf("</table>");
                     
                 printf("<hr>");
                     
-                $stmt = exeSQL("SELECT ip, user FROM user_table WHERE user='".$user."'");
+                $stmt = exeSQL("SELECT ip, name FROM user_table WHERE name='".$name."'");
                 
                 if ($stmt->fetch(PDO::FETCH_BOTH)!=false) {
                     printf("<script>alert('この人物は既に登録済みです');</script>");
                 } else {
-                    $stmt = exeSQL("INSERT INTO user_table (ip,user) values ('".$ip."','".$user."')");
+                    $stmt = exeSQL("INSERT INTO user_table (ip,name) values ('".$ip."','".$name."')");
                     print "<div class='text-center'>";
                     print "<p>データを登録しました</p>";
                     print "</div>";
@@ -101,9 +101,9 @@
           </div>
         </div>
         <div class="form-group row">
-          <label for="user" class="col-sm-2 col-form-label">名前</label>
+          <label for="name" class="col-sm-2 col-form-label">名前</label>
           <div class="col-sm-10">
-            <input type="text" class="form-control" id='user' name='user' placeholder='Name'>
+            <input type="text" class="form-control" id='name' name='name' placeholder='Name'>
           </div>
         </div>
 
