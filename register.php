@@ -4,9 +4,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Register</title>
+  <title>新規登録</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet" />
   <link rel="stylesheet" href="style.css">
 </head>
 
@@ -17,7 +18,7 @@
         aria-controls="navbarNav4" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <a class="navbar-brand" href="index.html">BisLab Server</a>
+      <a class="navbar-brand" href="index.html"><i class="fas fa-glasses"></i> Specula</a>
       <div class="collapse navbar-collapse" id="navbarNav4">
         <ul class="navbar-nav">
           <li class="nav-item active">
