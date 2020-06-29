@@ -17,12 +17,26 @@ function createTable(users) {
   }
 }
 
+// 同期通信かつPOST送信で値を送信する関数
+function sendForm(url, key, value) {
+  var form = document.createElement('form');
+  document.body.appendChild(form);
+  var input = document.createElement('input');
+  input.setAttribute('type', 'hidden');
+  input.setAttribute('name', key);
+  input.setAttribute('value', value);
+  form.appendChild(input);
+  form.setAttribute('action', url);
+  form.setAttribute('method', 'post');
+  form.submit();
+}
+
 // テーブルにデータベースのデータを追加する関数
 function addList(user) {
   const tr = document.createElement('tr');
   const td = Array(6); // tdタグを格納する配列
   const i_tag = Array(3); // iタグを格納する配列
-  
+
   // tdタグを作成
   for (let i = 0; i < td.length; i++) {
     td[i] = document.createElement('td');
@@ -50,7 +64,7 @@ function addList(user) {
   }
   i_tag[0].style.cursor = 'pointer';
   i_tag[0].addEventListener('click', function () {
-    post('status.php','id', user.id, createTable);
+    post('status.php', 'id', user.id, createTable);
   });
   td[3].appendChild(i_tag[0]); //tdタグの下にiタグを入れる
 
@@ -58,11 +72,9 @@ function addList(user) {
   i_tag[1].classList.add('fas');
   i_tag[1].classList.add('fa-edit');
   i_tag[1].style.cursor = 'pointer';
-
   // ボタンをタップしたらedit.phpに遷移
   i_tag[1].addEventListener('click', function () {
-    location.href = 'edit.php?name=' + user.id;
-    post('edit.php',user.id);
+    sendForm('edit.php', 'id', user.id);
   });
   td[4].appendChild(i_tag[1]);
 
@@ -71,8 +83,7 @@ function addList(user) {
   i_tag[2].classList.add('fa-trash');
   i_tag[2].style.cursor = 'pointer';
   i_tag[2].addEventListener('click', function () {
-    location.href = 'delete.php?name=' + user.id;
-    post('delete.php',user.id);
+    post('delete.php', 'id', user.id, createTable);
   });
   td[5].appendChild(i_tag[2]);
 

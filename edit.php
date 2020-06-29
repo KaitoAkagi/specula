@@ -1,11 +1,15 @@
 <!DOCTYPE html>
+<?php
+  // index.htmlから送信されたidを保持するため、セッション開始 
+   session_start();
+?>
 <html lang="ja">
 
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>編集</title>
+  <title>編集画面</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet" />
@@ -25,9 +29,6 @@
           <li class="nav-item">
             <a class="nav-link" href="register.php">新規登録</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="status.php">使用状況の管理</a>
-          </li>
         </ul>
       </div>
     </nav>
@@ -37,15 +38,15 @@
 
     <main>
       <div class="text-center mt-5 mb-5">
-        <h2>編集</h2>
+        <h2>編集画面</h2>
       </div>
 
       <?php
         require "function.php";
 
         // 編集画面に遷移した後、編集する内容をテーブルで表示
-        if (isset($_GET["name"])) {
-            $id = htmlspecialchars($_GET["name"]);
+        if (isset($_POST["id"])) {
+            $id = htmlspecialchars($_POST["id"]);
             $stmt = exeSQL("SELECT * FROM user_table WHERE id = '".$id."' ORDER BY ip");
             $rec = $stmt->fetch(PDO::FETCH_BOTH);
 
@@ -65,6 +66,9 @@
             printf("</tbody>");
             printf("</table>");
             printf("</div>");
+
+            // idを保持
+            $_SESSION["id"] = $id;
         }
 
       ?>
@@ -113,7 +117,12 @@
 
       <?php
         if (isset($_POST["change"])) {
-          $ip = htmlspecialchars($_POST["ip"]); //変更前のip
+
+          $id = $_SESSION["id"]; // 保存されてあるidを取得
+          session_unset(); // セッション変数をすべて削除
+          session_destroy(); // セッションIDおよびデータを破棄
+
+          $ip = htmlspecialchars($_POST["ip"]); //変更後のip
           $name = htmlspecialchars($_POST["name"]); //変更後の名前
 
           // ipと名前が空欄のまま変更ボタンを押した場合

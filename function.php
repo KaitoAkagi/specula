@@ -2,7 +2,7 @@
 
     function exeSQL($sql){
         try {
-            $dsn = 'mysql:dbname=dus_system;host=localhost';
+            $dsn = 'mysql:dbname=specula;host=localhost';
             $username = 'root';
             $password = '17854tak03101112';
             $dbh = new PDO($dsn, $username, $password); //データベースに接続

@@ -8,10 +8,9 @@ async function callApi(fn) {
   fn(users); //非同期関数は必ずpromiseで返すのでコールバック関数を使用
 }
 
-// POST送信をする関数
+// AjaxでPOST送信をする関数
 async function post(url, key, value, fn) {
-  const request = new FormData(); //ファームデータ作成
-  // request.set(key, value); //リクエストする変数名・データをセット
+  const request = new FormData(); //フォームデータ作成
   request.append(key, value);
   console.log(request);
   

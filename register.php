@@ -24,9 +24,6 @@
           <li class="nav-item active">
             <a class="nav-link" href="register.php">新規登録</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="status.php">使用状況の管理</a>
-          </li>
         </ul>
       </div>
     </nav>
