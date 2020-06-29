@@ -56,39 +56,40 @@
             } else {
                 $ip = htmlspecialchars($_POST['ip']);
                 $name = htmlspecialchars($_POST['name']);
-                printf("<hr>");
-                printf("<div class='table-responsive'>");
-                printf("<table class='table table-bordered table-striped'>");
-                printf("<thead>");
-                printf("<tr>");
-                printf("<th>IP</th>");
-                printf("<th>名前</th>");
-                print("</tr>");
-                print("</thead>");
-                print("<tbody>");
-                print("<tr>");
-                printf("<th scope='row'> %s </th>",$ip);
-                printf("<td> %s </td>", $name);
-                printf("</tr>");
-                printf("</tbody>");
-                printf("</table>");
-                    
-                printf("<hr>");
-                    
-                $stmt = exeSQL("SELECT ip, name FROM user_table WHERE name='".$name."'");
                 
-                if ($stmt->fetch(PDO::FETCH_BOTH)!=false) {
-                    printf("<script>alert('この人物は既に登録済みです');</script>");
+                $stmt = exeSQL("SELECT ip, name FROM user_table WHERE name='".$name."' AND ip='".$ip."'");
+                
+                if ($stmt->fetch(PDO::FETCH_BOTH)) {
+                  printf("<script>window.onload = function() {
+                    alert('同じIP・名前のユーザーがすでに存在します');
+                  }</script>");
                 } else {
-                    $stmt = exeSQL("INSERT INTO user_table (ip,name) values ('".$ip."','".$name."')");
-                    print "<div class='text-center'>";
-                    print "<p>データを登録しました</p>";
-                    print "</div>";
-                    print "<hr>";
+                  printf("<hr>");
+                  printf("<div class='table-responsive'>");
+                  printf("<table class='table table-bordered table-striped'>");
+                  printf("<thead>");
+                  printf("<tr>");
+                  printf("<th>IP</th>");
+                  printf("<th>名前</th>");
+                  print("</tr>");
+                  print("</thead>");
+                  print("<tbody>");
+                  print("<tr>");
+                  printf("<th scope='row'> %s </th>",$ip);
+                  printf("<td> %s </td>", $name);
+                  printf("</tr>");
+                  printf("</tbody>");
+                  printf("</table>"); 
+                  printf("<hr>");
+
+                  $stmt = exeSQL("INSERT INTO user_table (ip,name) values ('".$ip."','".$name."')");
+
+                  print "<div class='text-center'>";
+                  print "<p>データを登録しました</p>";
+                  print "</div>";
+                  print "<hr>";
                 }
                 $dbh = null; //データベースから切断
-                
-                print '</select><br>';
             }
         }
         ?>

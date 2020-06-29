@@ -19,7 +19,6 @@ function createTable(users) {
 
 // テーブルにデータベースのデータを追加する関数
 function addList(user) {
-
   const tr = document.createElement('tr');
   const td = Array(6); // tdタグを格納する配列
   const i_tag = Array(3); // iタグを格納する配列
@@ -51,7 +50,7 @@ function addList(user) {
   }
   i_tag[0].style.cursor = 'pointer';
   i_tag[0].addEventListener('click', function () {
-    location.href = 'status.php?id=' + user.id + '&status=' + user.status;
+    post('status.php','id', user.id, createTable);
   });
   td[3].appendChild(i_tag[0]); //tdタグの下にiタグを入れる
 
@@ -59,9 +58,11 @@ function addList(user) {
   i_tag[1].classList.add('fas');
   i_tag[1].classList.add('fa-edit');
   i_tag[1].style.cursor = 'pointer';
+
   // ボタンをタップしたらedit.phpに遷移
   i_tag[1].addEventListener('click', function () {
     location.href = 'edit.php?name=' + user.id;
+    post('edit.php',user.id);
   });
   td[4].appendChild(i_tag[1]);
 
@@ -71,6 +72,7 @@ function addList(user) {
   i_tag[2].style.cursor = 'pointer';
   i_tag[2].addEventListener('click', function () {
     location.href = 'delete.php?name=' + user.id;
+    post('delete.php',user.id);
   });
   td[5].appendChild(i_tag[2]);
 

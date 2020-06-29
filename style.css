@@ -11,6 +11,10 @@ footer {
   width: 100%;
 }
 
+.mgr-10 {
+  margin-right: 20px;
+}
+
 #title {
   margin: 90px 0 90px 0;
 }
@@ -18,4 +22,8 @@ footer {
 .container {
   flex: 1;
   padding-bottom: 100px;
+}
+
+.table {
+  max-width: 100vw;
 }
