@@ -1,4 +1,4 @@
-# Soecula_server
+# Specula
 
 ### 1. 概要
 
