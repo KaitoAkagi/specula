@@ -1,20 +1,16 @@
 const lists = document.getElementById('lists');
-let lists_len = 0;
 
 // テーブルを作成する関数
 // start+1番目からend-1番目のテーブルデータを表示する
 function createTable(users) {
-  lists_len = users.length; //データの総数を変数lists_lenに格納
 
   // すでに表示してあるテーブルがある場合、そのテーブルを削除する
   if (lists.textContent) lists.textContent = null;
-  for (let i = start; i < end; i++) {
-    if (i < users.length) {
-      addList(users[i]);
-    } else {
-      break;
-    }
-  }
+
+  users.forEach(function (user) {
+    addList(user);
+  });
+
 }
 
 // 同期通信かつPOST送信で値を送信する関数

@@ -1,5 +1,5 @@
  <?php
-      require "function.php";
+      require "database.php";
         
       if (isset($_POST["id"])){
           $id = htmlspecialchars($_POST["id"]);

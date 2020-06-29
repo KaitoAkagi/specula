@@ -42,7 +42,7 @@
       </div>
 
       <?php
-        require "function.php";
+        require "database.php";
 
         // 編集画面に遷移した後、編集する内容をテーブルで表示
         if (isset($_POST["id"])) {

@@ -35,7 +35,7 @@
         <h2>新規登録</h2>
       </div>
       <?php
-        require "function.php";
+        require "database.php";
 
         if (isset($_POST['register'])) {
             if (empty($_POST["ip"])&&(empty($_POST["name"]))) {
@@ -79,7 +79,10 @@
                   printf("</table>"); 
                   printf("<hr>");
 
-                  $stmt = exeSQL("INSERT INTO user_table (ip,name) values ('".$ip."','".$name."')");
+                  date_default_timezone_set('Asia/Tokyo'); //東京の日付に合わせる
+                  $time = date("Y/m/d H:i:s");
+
+                  $stmt = exeSQL("INSERT INTO user_table (ip,name,time) values ('".$ip."','".$name."','".$time."')");
 
                   print "<div class='text-center'>";
                   print "<p>データを登録しました</p>";

@@ -1,5 +1,5 @@
 <?php
-  require "function.php";
+  require "database.php";
   
   if (isset($_POST["id"])) {
     // 送信されたidの名前とipを取得
