@@ -1,3 +1,7 @@
+<?php
+  session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="ja">
   <head>
@@ -30,11 +34,14 @@
         >
           <span class="navbar-toggler-icon"></span>
         </button>
-        <a class="navbar-brand" href="index.html"><i class="fas fa-glasses"></i> Specula</a>
+        <a class="navbar-brand" href="table.php"><i class="fas fa-glasses"></i> Specula</a>
         <div class="collapse navbar-collapse" id="navbarNav4">
           <ul class="navbar-nav">
-            <li class="nav-item">
+            <!-- <li class="nav-item">
               <a class="nav-link" href="register.php">新規登録</a>
+            </li> -->
+            <li class="nav-item">
+              <a class="nav-link" href="logout.php">ログアウト</a>
             </li>
           </ul>
         </div>
@@ -45,7 +52,9 @@
     <div class="container">
       <main>
         <div class="text-center" id="title">
-          <h1>Built for BisLab members.</h1>
+          <?php
+            printf("<h1>ようこそ ".$_SESSION["name"]." さん！</h1>")
+          ?>
         </div>
 
         <!-- ボタンの説明 -->
@@ -72,7 +81,6 @@
             <tbody id="lists"></tbody>
           </table>
         </div>
-        
       </main>
     </div>
 
@@ -80,10 +88,10 @@
       <p class="text-muted text-center">Copyright(C) Akagi Kaito All Rights Reserved.</p>
     </footer>
 
-    <!-- webAPI(api.php)を叩く -->
+    <!-- webAPIを叩く -->
     <script src="call.js"></script>
     <!-- 使用状況のテーブル -->
-    <script src="table.js"></script>
+    <script src="create_table.js"></script>
     <script
       src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
       integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"

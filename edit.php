@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <?php
-  // index.htmlから送信されたidを保持するため、セッション開始 
+  // table.phpから送信されたidを保持するため、セッション開始 
    session_start();
 ?>
 <html lang="ja">
@@ -23,7 +23,7 @@
         aria-controls="navbarNav4" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <a class="navbar-brand" href="index.html"><i class="fas fa-glasses"></i> Specula</a>
+      <a class="navbar-brand" href="table.php"><i class="fas fa-glasses"></i> Specula</a>
       <div class="collapse navbar-collapse" id="navbarNav4">
         <ul class="navbar-nav">
           <li class="nav-item">
@@ -109,7 +109,7 @@
         
         <div class='form-group'>
           <div cass="form-inline">
-            <button type='button' class="btn btn-dark float-left" onclick="location.href='./index.html'">戻る</button>
+            <button type='button' class="btn btn-dark float-left" onclick="location.href='./table.php'">戻る</button>
             <button type='submit' class="btn btn-success float-right" style="margin-left: 10px;" name='change'>変更</button>
           </div>
         </div>
@@ -133,15 +133,15 @@
           // 名前が空欄の場合、名前以外を変更
           } else if (empty($name)) {
             $stmt = exeSQL("UPDATE user_table SET ip = '".$ip."' WHERE id = '".$id."'");
-            header("Location: index.html");
+            header("Location: table.php");
           // ipが空欄の場合、ip以外を変更
           } else if (empty($ip)) {
             $stmt = exeSQL("UPDATE user_table SET name = '".$name."' WHERE id = '".$id."'");
-            header("Location: index.html");
+            header("Location: table.php");
           // 空欄がない場合、名前とipを変更
           } else {
             $stmt = exeSQL("UPDATE user_table SET ip = '".$ip."', name = '".$name."' WHERE id = '".$id."'");
-            header("Location: index.html");
+            header("Location: table.php");
           }
         }
       ?>
