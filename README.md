@@ -14,4 +14,4 @@
 バックエンド：PHP  
 フレームワーク：Bootstrap  
 技術：Ajax  
-開発環境：Visual Studio Code、Amazon Web Service、Apache Web Server、MySQL Databasem、phpMyAdmin
+開発環境：Visual Studio Code、Amazon Web Service、Apache Web Server、MariaDB、phpMyAdmin
