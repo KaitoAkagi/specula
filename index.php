@@ -79,6 +79,7 @@
                   if (password_verify($_POST['password'], $row['password'])) {
                     session_regenerate_id(true); //session_idを新しく生成し、置き換える
                     $_SESSION['name'] = $row['name'];
+                    $_SESSION['id'] = $row['id'];
                     header("Location: table.php");
                   } else {
                     error_msg("名前またはパスワードが間違っています");
@@ -118,7 +119,7 @@
             </div>
       </main>
     </div>
-
+    
     <footer class="footer">
       <p class="text-muted text-center">Copyright(C) Akagi Kaito All Rights Reserved.</p>
     </footer>

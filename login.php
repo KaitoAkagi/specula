@@ -24,6 +24,7 @@
     if (password_verify($_POST['password'], $row['password'])) {
         session_regenerate_id(true); //session_idを新しく生成し、置き換える
         $_SESSION['name'] = $row['name'];
+        print($_SESSION["id"]);
         header("Location: table.php");
     } else {
         echo ' <script>alert("名前またはパスワードが間違っています")</script>';

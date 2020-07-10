@@ -34,7 +34,7 @@
   <div class="container">
     <main>
       <div class="text-center mt-5 mb-5">
-        <h2>新規登録</h2>
+        <h2>アカウント作成</h2>
       </div>
 
       <form method="POST" action="">

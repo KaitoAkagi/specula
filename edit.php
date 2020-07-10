@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <?php
-  // table.phpから送信されたidを保持するため、セッション開始 
+  //  ログイン状態を保持するためのsession
    session_start();
 ?>
 <html lang="ja">
@@ -24,10 +24,17 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <a class="navbar-brand" href="table.php"><i class="fas fa-glasses"></i> Specula</a>
-      <div class="collapse navbar-collapse" id="navbarNav4">
+      <div class="collapse navbar-collapse" name="navbarNav4">
         <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link" href="register.php">新規登録</a>
+          <li class="nav-item dropdown">
+            <a href="#" class="nav-link dropdown-toggle" name="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              アカウント
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="edit.php">編集画面へ</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="logout.php">ログアウト</a>
+            </div>
           </li>
         </ul>
       </div>
@@ -45,9 +52,9 @@
         require "database.php";
 
         // 編集画面に遷移した後、編集する内容をテーブルで表示
-        if (isset($_POST["id"])) {
-            $id = htmlspecialchars($_POST["id"]);
-            $stmt = exeSQL("SELECT * FROM user_table WHERE id = '".$id."' ORDER BY ip");
+        if (isset($_SESSION["name"])) {
+            $name = htmlspecialchars($_SESSION["name"]);
+            $stmt = exeSQL("SELECT * FROM user_table WHERE name = '".$name."' ORDER BY ip");
             $rec = $stmt->fetch(PDO::FETCH_BOTH);
 
             printf("<div class='table-responsive'>");
@@ -60,15 +67,13 @@
             printf("</thead>");
             printf("<tbody>");
             printf("<tr>");
-            printf("<td> %s </td>", $rec["ip"]);
+            printf("<td>%s</td>", $rec["ip"]);
             printf("<td>%s</td>", $rec["name"]);
             printf("</tr>");
             printf("</tbody>");
             printf("</table>");
             printf("</div>");
 
-            // idを保持
-            $_SESSION["id"] = $id;
         }
 
       ?>
@@ -78,52 +83,42 @@
       <br>
 
       <form method="POST" action="">
-        <div class="form-group row">
-          <label for="ip" class="col-sm-2 col-form-label">IP</label>
-          <div class="col-sm-10">
-            <select class="form-control" id="ip" name='ip'>
-              <?php
-                //ipだけ取り出す（重複なし）
-                $stmt_ip = exeSQL("SELECT DISTINCT ip FROM user_table WHERE 1 ORDER BY ip");
+        <div class="form-group">
+          <label for="ip">IP</label>
+          <select class="form-control" name="ip" name='ip'>
+            <?php
+              //ipだけ取り出す（重複なし）
+              $stmt_ip = exeSQL("SELECT DISTINCT ip FROM user_table WHERE 1 ORDER BY ip");
 
-                printf("<option value=''></option>");
-                while (true) {
-                  $rec = $stmt_ip->fetch(PDO::FETCH_BOTH);
-                  if ($rec == false) {
-                      break;
-                  }
-                  printf("<option value='%s'>%s</option>", $rec["ip"], $rec["ip"]);
+              printf("<option value=''></option>");
+              while (true) {
+                $rec = $stmt_ip->fetch(PDO::FETCH_BOTH);
+                if ($rec == false) {
+                    break;
                 }
-              ?>
-            </select>
-          </div>
+                printf("<option value='%s'>%s</option>", $rec["ip"], $rec["ip"]);
+              }
+            ?>
+          </select>
         </div>
-        <div class="form-group row">
-          <label for="name" class="col-sm-2 col-form-label">名前</label>
-          <div class="col-sm-10">
-            <input type="text" class="form-control" id='name' name='name' placeholder='Name'>
-          </div>
+
+        <div class="form-group">
+          <label for="name">名前</label>
+          <input type="text" class="form-control" name='name' name='name' placeholder='Name'>
         </div>
 
         <br>
         
-        <div class='form-group'>
-          <div cass="form-inline">
-            <button type='button' class="btn btn-dark float-left" onclick="location.href='./table.php'">戻る</button>
-            <button type='submit' class="btn btn-success float-right" style="margin-left: 10px;" name='change'>変更</button>
-          </div>
-        </div>
+        <button type='submit' class="btn btn-success" name='change'>更新する</button>
       </form>
+
+      <button class="btn btn-danger center-button" onclick="location.href='delete.php'">このアカウントを削除する</button>
 
       <?php
         if (isset($_POST["change"])) {
 
-          $id = $_SESSION["id"]; // 保存されてあるidを取得
-          session_unset(); // セッション変数をすべて削除
-          session_destroy(); // セッションIDおよびデータを破棄
-
           $ip = htmlspecialchars($_POST["ip"]); //変更後のip
-          $name = htmlspecialchars($_POST["name"]); //変更後の名前
+          $name = $_SESSION["name"]; // 保存されてあるnameを取得
 
           // ipと名前が空欄のまま変更ボタンを押した場合
           if (empty($_POST["ip"])&&(empty($_POST["name"]))) {
@@ -132,15 +127,15 @@
                 }</script>");
           // 名前が空欄の場合、名前以外を変更
           } else if (empty($name)) {
-            $stmt = exeSQL("UPDATE user_table SET ip = '".$ip."' WHERE id = '".$id."'");
+            $stmt = exeSQL("UPDATE user_table SET ip = '".$ip."' WHERE name = '".$name."'");
             header("Location: table.php");
           // ipが空欄の場合、ip以外を変更
           } else if (empty($ip)) {
-            $stmt = exeSQL("UPDATE user_table SET name = '".$name."' WHERE id = '".$id."'");
+            $stmt = exeSQL("UPDATE user_table SET name = '".$name."' WHERE name = '".$name."'");
             header("Location: table.php");
           // 空欄がない場合、名前とipを変更
           } else {
-            $stmt = exeSQL("UPDATE user_table SET ip = '".$ip."', name = '".$name."' WHERE id = '".$id."'");
+            $stmt = exeSQL("UPDATE user_table SET ip = '".$ip."', name = '".$name."' WHERE name = '".$name."'");
             header("Location: table.php");
           }
         }

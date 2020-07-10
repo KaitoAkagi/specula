@@ -1,5 +1,10 @@
 <?php
   session_start();
+
+  // ログインせずにこのサイトに飛んだら、強制的にログイン画面に遷移
+  if(!isset($_SESSION["name"])){
+    header("Location: login.php");
+  }
 ?>
 
 <!DOCTYPE html>
@@ -37,11 +42,15 @@
         <a class="navbar-brand" href="table.php"><i class="fas fa-glasses"></i> Specula</a>
         <div class="collapse navbar-collapse" id="navbarNav4">
           <ul class="navbar-nav">
-            <!-- <li class="nav-item">
-              <a class="nav-link" href="register.php">新規登録</a>
-            </li> -->
-            <li class="nav-item">
-              <a class="nav-link" href="logout.php">ログアウト</a>
+            <li class="nav-item dropdown">
+              <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                アカウント
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="edit.php">編集画面へ</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="logout.php">ログアウト</a>
+              </div>
             </li>
           </ul>
         </div>
@@ -53,7 +62,7 @@
       <main>
         <div class="text-center" id="title">
           <?php
-            printf("<h1>ようこそ ".$_SESSION["name"]." さん！</h1>")
+            printf("<h1>ようこそ ".$_SESSION["name"]." さん！</h1>");
           ?>
         </div>
 
@@ -74,8 +83,6 @@
                 <th>名前</th>
                 <th>最終アクセス</th>
                 <th>状態</th>
-                <th>編集</th>
-                <th>削除</th>
               </tr>
             </thead>
             <tbody id="lists"></tbody>

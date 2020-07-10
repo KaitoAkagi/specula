@@ -30,8 +30,8 @@ function sendForm(url, key, value) {
 // テーブルにデータベースのデータを追加する関数
 function addList(user) {
   const tr = document.createElement('tr');
-  const td = Array(6); // tdタグを格納する配列
-  const i_tag = Array(3); // iタグを格納する配列
+  const td = Array(4); // tdタグを格納する配列
+  const i_tag = Array(1); // iタグを格納する配列
 
   // tdタグを作成
   for (let i = 0; i < td.length; i++) {
@@ -63,25 +63,6 @@ function addList(user) {
     post('status.php', 'id', user.id, createTable);
   });
   td[3].appendChild(i_tag[0]); //tdタグの下にiタグを入れる
-
-  //   編集ボタンを表示
-  i_tag[1].classList.add('fas');
-  i_tag[1].classList.add('fa-edit');
-  i_tag[1].style.cursor = 'pointer';
-  // ボタンをタップしたらedit.phpに遷移
-  i_tag[1].addEventListener('click', function () {
-    sendForm('edit.php', 'id', user.id);
-  });
-  td[4].appendChild(i_tag[1]);
-
-  //   削除ボタンを表示
-  i_tag[2].classList.add('fas');
-  i_tag[2].classList.add('fa-trash');
-  i_tag[2].style.cursor = 'pointer';
-  i_tag[2].addEventListener('click', function () {
-    post('delete.php', 'id', user.id, createTable);
-  });
-  td[5].appendChild(i_tag[2]);
 
   // trタグにtdタグの内容を追加
   for (let i = 0; i < td.length; i++) {

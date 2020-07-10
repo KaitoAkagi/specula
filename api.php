@@ -13,7 +13,7 @@
         // 全てのデータベースのデータを格納する配列を定義
         $all_data = array();
         
-        //カラム名で配列に添字をつけた配列を返す
+        //カラム名で配列に添字をつけた配列（連想配列）を返す
         while($rec = $stmt->fetch(PDO::FETCH_ASSOC)){
             $all_data[] = $rec;
         }
