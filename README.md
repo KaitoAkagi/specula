@@ -6,7 +6,7 @@
 
 ### 2. 機能
 
-登録機能、編集機能、削除機能、画面遷移、使用状況管理機能
+ログイン・ログアウト機能、登録機能、編集機能、削除機能、画面遷移、使用状況管理機能
 
 ### 3. 使用言語・技術など
 
@@ -14,4 +14,4 @@
 バックエンド：PHP  
 フレームワーク：Bootstrap  
 技術：Ajax  
-開発環境：Visual Studio Code、Amazon Web Service、Apache Web Server、MySQL Databasem、phpMyAdmin
+開発環境：Visual Studio Code、Amazon Web Service、Apache Web Server、MariaDB、phpMyAdmin
