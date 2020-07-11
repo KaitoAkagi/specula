@@ -5,7 +5,7 @@
         $password = '17854tak03101112';
         $dbh = new PDO($dsn, $username, $password); //データベースに接続
         $dbh->query('SET NAMES utf8'); //文字コードのための設定
-        $sql = "SELECT * FROM user_table WHERE 1 ORDER BY ip";
+        $sql = "SELECT * FROM user_table, ip_table WHERE user_table.name = ip_table.name ORDER BY ip";
         $stmt = $dbh->prepare($sql);
         $stmt->execute();
         $dbh = null; //データベースから切断

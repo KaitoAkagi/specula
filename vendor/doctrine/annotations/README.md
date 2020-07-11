@@ -10,7 +10,7 @@ Docblock Annotations Parser library (extracted from [Doctrine Common](https://gi
 
 ## Documentation
 
-See the [doctrine-project website](https://www.doctrine-project.org/projects/doctrine-annotations/en/latest/table.php).
+See the [doctrine-project website](https://www.doctrine-project.org/projects/doctrine-annotations/en/latest/index.php).
 
 ## Changelog
 

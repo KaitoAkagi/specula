@@ -3,7 +3,7 @@
 
   // ログインせずにこのサイトに飛んだら、強制的にログイン画面に遷移
   if(!isset($_SESSION["name"])){
-    header("Location: login.php");
+    header("Location: ../index.php");
   }
 ?>
 
@@ -21,7 +21,7 @@
       crossorigin="anonymous"
     />
     <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet" />
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="../css/style.css" />
   </head>
 
   <body>
@@ -39,7 +39,7 @@
         >
           <span class="navbar-toggler-icon"></span>
         </button>
-        <a class="navbar-brand" href="table.php"><i class="fas fa-glasses"></i> Specula</a>
+        <a class="navbar-brand" href="index.php"><i class="fas fa-glasses"></i> Specula</a>
         <div class="collapse navbar-collapse" id="navbarNav4">
           <ul class="navbar-nav">
             <li class="nav-item dropdown">
@@ -47,7 +47,7 @@
                 アカウント
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="edit.php">編集画面へ</a>
+                <a class="dropdown-item" href="info/">基本情報</a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="logout.php">ログアウト</a>
               </div>
@@ -60,7 +60,7 @@
     <!-- main -->
     <div class="container">
       <main>
-        <div class="text-center" id="title">
+        <div class="text-center title">
           <?php
             printf("<h1>ようこそ ".$_SESSION["name"]." さん！</h1>");
           ?>

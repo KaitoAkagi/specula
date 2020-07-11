@@ -13,7 +13,7 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../../css/style.css">
 </head>
 
 <body>
@@ -23,7 +23,7 @@
         aria-controls="navbarNav4" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <a class="navbar-brand" href="index.php"><i class="fas fa-glasses"></i> Specula</a>
+      <a class="navbar-brand" href="../index.php"><i class="fas fa-glasses"></i> Specula</a>
       <div class="collapse navbar-collapse" name="navbarNav4">
         <ul class="navbar-nav">
           <li class="nav-item dropdown">
@@ -31,9 +31,9 @@
               アカウント
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="info.php">登録内容</a>
+              <a class="dropdown-item" href="#">基本情報</a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="logout.php">ログアウト</a>
+              <a class="dropdown-item" href="../logout.php">ログアウト</a>
             </div>
           </li>
         </ul>
@@ -45,11 +45,11 @@
 
     <main>
       <div class="text-center mt-5 mb-5">
-        <h2>登録内容</h2>
+        <h2>基本情報</h2>
       </div>
 
       <?php
-        require "database.php";
+        require "../../database.php";
 
         // 編集画面に遷移した後、編集する内容をテーブルで表示
         if (isset($_SESSION["name"])) {

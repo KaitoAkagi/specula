@@ -12,39 +12,21 @@
       crossorigin="anonymous"
     />
     <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet" />
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="css/style.css" />
   </head>
 
   <body>
     <!-- メニューバー -->
     <header>
       <nav class="navbar navbar-expand-sm navbar-dark bg-dark mb-3">
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-toggle="collapse"
-          data-target="#navbarNav4"
-          aria-controls="navbarNav4"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
         <a class="navbar-brand" href=""><i class="fas fa-glasses"></i> Specula</a>
-        <div class="collapse navbar-collapse" id="navbarNav4">
-          <ul class="navbar-nav">
-            <!-- <li class="nav-item">
-              <a class="nav-link" href="register.php">新規登録</a>
-            </li> -->
-          </ul>
-        </div>
       </nav>
     </header>
 
     <!-- main -->
     <div class="container">
         <main>
-            <div class="text-center" id="title">
+            <div class="text-center title">
                 <h1>Specula</h1>
             </div>
 
@@ -56,7 +38,7 @@
 
               //  ログイン済みの場合
               if(isset($_SESSION["name"])){
-                header("table.php");
+                header("index.php");
               }
               
               // ログインボタンを押した後の処理
@@ -80,7 +62,7 @@
                     session_regenerate_id(true); //session_idを新しく生成し、置き換える
                     $_SESSION['name'] = $row['name'];
                     $_SESSION['id'] = $row['id'];
-                    header("Location: table.php");
+                    header("Location: home");
                   } else {
                     error_msg("名前またはパスワードが間違っています");
                   }
@@ -89,9 +71,6 @@
             ?>
 
             <div class="login-box">
-                <!-- <div class="text-center" id="sub-title">
-                    <h2>Login</h2>
-                </div> -->
                 <form method="POST" action="">
                     <div class="form-group row">
                         <label for="name" class="col-sm-3 col-form-label">名前</label>
@@ -111,11 +90,11 @@
                 </form>
             </div>
 
-            <div class="text-center" id="sub-title">
+            <div class="text-center sub-title">
                 <p>ー 初めての方はこちら ー</p>
             </div>
             <div class="text-center">
-                <a class="btn btn-success center-button" href="register.php" type="button">アカウント作成</a>
+                <a class="btn btn-success center-button" href="register/" type="button">アカウント作成</a>
             </div>
       </main>
     </div>

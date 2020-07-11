@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../css/style.css">
 </head>
 
 <body>
@@ -19,15 +19,7 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <a class="navbar-brand" href="index.php"><i class="fas fa-glasses"></i> Specula</a>
-      <div class="collapse navbar-collapse" id="navbarNav4">
-        <ul class="navbar-nav">
-          <li class="nav-item active">
-            <!-- <form method="POST" action="logout.php">
-              <a class="nav-link" href="register.php">新規登録</a>
-            </form> -->
-          </li>
-        </ul>
-      </div>
+      
     </nav>
   </header>
 
@@ -62,14 +54,14 @@
         <br>
         <div class='form-group'>
           <div cass="form-inline">
-            <button type='button' class="btn btn-dark float-left" onclick="location.href='./index.php'">戻る</button>
+            <button type='button' class="btn btn-dark float-left" onclick="location.href='../index.php'">戻る</button>
             <button type="submit" class="btn btn-success float-right offset-sm-8" name="register">登録</button>
           </div>
         </div>
       </form>
 
       <?php
-        require "database.php";
+        require "../database.php";
 
         session_start();
 
@@ -89,25 +81,29 @@
                   return false;
                 }
                 
-                $stmt = exeSQL("SELECT ip, name FROM user_table WHERE name='".$name."' AND ip='".$ip."'");
+                // 同じ名前のユーザーがいるか判定
+                $stmt = exeSQL("SELECT name FROM user_table WHERE name='".$name."'");
                 
+                // 同じ名前のユーザーがいたらエラーメッセージ表示
                 if ($stmt->fetch(PDO::FETCH_BOTH)) {
                   printf("<script>window.onload = function() {
-                    alert('同じIP・名前のユーザーがすでに存在します');
+                    alert('同じ名前のユーザーがすでに存在します');
                   }</script>");
                 } else {
 
                   // 現在の時刻を取得してデータベースに保存する
                   date_default_timezone_set('Asia/Tokyo'); //東京の日付に合わせる
                   $time = date("Y/m/d H:i:s");
-  
-                  $stmt = exeSQL("INSERT INTO user_table (ip,name,password,time) values ('".$ip."','".$name."','".$password."','".$time."')");
-  
-                  $dbh = null; //データベースから切断
+
+                  // テーブル"user_table"に名前とパスワードを追加
+                  $stmt = exeSQL("INSERT INTO user_table (name,password) values ('".$name."','".$password."')");
+
+                  // テーブル"ip_table"に名前、ipと最終アクセス時間（time）を保存
+                  $stmt = exeSQL("INSERT INTO ip_table (name,ip,time) values ('".$name."','".$ip."','".$time."')");
                   
                   $_SESSION['name'] = $name;
 
-                  header("location: table.php");
+                  header("location: ../home");
                 }
             } else {
                 printf("<script>window.onload = function() {
