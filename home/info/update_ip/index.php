@@ -13,7 +13,7 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet" />
-  <link rel="stylesheet" href="../../css/style.css">
+  <link rel="stylesheet" href="../../../css/style.css">
 </head>
 
 <body>
@@ -31,9 +31,9 @@
               アカウント
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="#">基本情報</a>
+              <a class="dropdown-item" href="../">基本情報</a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="../logout.php">ログアウト</a>
+              <a class="dropdown-item" href="../../logout.php">ログアウト</a>
             </div>
           </li>
         </ul>
@@ -45,71 +45,71 @@
 
     <main>
       <div class="text-center mt-5 mb-5">
-        <h2>基本情報</h2>
+        <h2>IPを変更</h2>
       </div>
-
-      <div class="wrapper">
-        <div class="bold item">名前</div>
-        <?php
-          echo("<div class='data'>".$_SESSION["name"]."</div>")
-        ?>
-        <a href="update_name"><i class="fas fa-edit"></i></a>
-      </div>
-      <hr>
-      <div class="wrapper">
-        <div class="bold item">IP</div>
-        <div class="data">
-          <?php
-            require "../../database.php";
-
-            $stmt = exeSQL("SELECT * FROM ip_table WHERE name = '".$_SESSION["name"]."'");
-            $count=$stmt->rowCount(); //抽出できたレコード数をcountに格納
-
-            $i = 0;
-            // ユーザー$_SESSION["name"]が所持しているIPアドレスを全て表示する
-            foreach($stmt as $row){
-              $i++;
-              echo($row["ip"]);
-              // IPアドレス同士の間に,を入れる
-              if($i < $count){
-                echo(", ");
-              }
-            }
-          ?>
+      
+      <form method="POST" action="">
+        <div class="form-group row">
+          <div class="col-sm-10">
+            <input type="number" min="0" class="form-control" id='ip' name='ip' placeholder='IP'>
+          </div>
+          <button type='submit' class="btn btn-success col-sm-2" name='add'>追加</button>
         </div>
-        <a href="update_ip"><i class="fas fa-edit"></i></a>
-      </div>
+      </form>
 
-      <button class="btn btn-danger center-button account-delete" onclick="location.href='delete.php'">このアカウントを削除する</button>
+      <form method="POST" action="">
+        <div class="form-group row">
+          <div class="col-sm-10">
+            <select class="form-control" name="ip" name='ip'>
+            <?php
+              require "../../../database.php";
+
+              $stmt = exeSQL("SELECT DISTINCT ip FROM ip_table WHERE name = '".$_SESSION["name"]."' ORDER BY ip");
+
+              echo("<option value=''></option>");
+              while (true) {
+                $rec = $stmt->fetch(PDO::FETCH_BOTH);
+                if ($rec == false) {
+                    break;
+                }
+                printf("<option value='%s'>%s</option>", $rec["ip"], $rec["ip"]);
+              }
+            ?>
+            </select>
+          </div>
+          <button type='submit' class="btn btn-danger col-sm-2" name='delete'>削除</button>
+        </div>
+      </form>
 
       <?php
-        if (isset($_POST["change"])) {
-
+        if (isset($_POST["add"])) {
           $ip = htmlspecialchars($_POST["ip"]); //変更後のip
-          $name = htmlspecialchars($_POST["name"]); //変更後のname
 
-          // ipと名前が空欄のまま変更ボタンを押した場合
-          if (empty($ip)&&(empty($name))) {
+          // ipが空欄のまま追加ボタンを押した場合
+          if (empty($ip)) {
               printf("<script>window.onload = function() {
-                alert('IPか名前を入力して下さい');
+                alert('IPを入力して下さい');
                 }</script>");
-          // 名前が空欄の場合、ipを変更
-          } else if (empty($name)) {
-            $stmt = exeSQL("UPDATE ip_table SET ip = '".$ip."' WHERE name = '".$_SESSION["name"]."'");
-            header("Location: index.php");
-          // ipが空欄の場合、名前を変更
-          } else if (empty($ip)) {
-            $stmt = exeSQL("UPDATE user_table SET name = '".$name."' WHERE name = '".$_SESSION["name"]."'");
-            $stmt = exeSQL("UPDATE ip_table SET name = '".$name."' WHERE name = '".$_SESSION["name"]."'");
-            $_SESSION["name"] = $name;
-            header("Location: index.php");
-          // 空欄がない場合、名前とipを変更
           } else {
-            $stmt = exeSQL("UPDATE user_table SET name = '".$name."' WHERE name = '".$_SESSION["name"]."'");
-            $stmt = exeSQL("UPDATE ip_table SET ip = '".$ip."', name = '".$name."' WHERE name = '".$_SESSION["name"]."'");
-            $_SESSION["name"] = $name;
-            header("Location: index.php");
+            // テーブルip_tableにname,ipを追加
+            $stmt = exeSQL("INSERT INTO ip_table (name,ip) values ('".$_SESSION["name"]."','".$ip."')");
+            
+            header("Location: ../index.php");
           }
+        } else if (isset($_POST["delete"])) {
+            $ip = htmlspecialchars($_POST["ip"]); //削除するip
+
+            // ipが空欄のまま削除ボタンを押した場合
+            if (empty($ip)) {
+                printf("<script>window.onload = function() {
+                    alert('IPを入力して下さい');
+                    }</script>");
+            } else {
+                // テーブルip_tableから指定した名前・ipアドレスを削除
+                $stmt = exeSQL("DELETE FROM ip_table WHERE name = '".$_SESSION["name"]."' AND ip = '".$ip."' LIMIT 1");
+                
+                header("Location: ../index.php");
+            }
         }
       ?>
     </main>
