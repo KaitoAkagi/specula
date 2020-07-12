@@ -2,18 +2,8 @@
     require "../database.php";
     session_start();
 
-    // ログインユーザーが所持するIPを全て取得
-    $stmt = exeSQL("SELECT ip FROM ip_table WHERE name = '".$_SESSION["name"]."' ORDER BY ip");
-
-    $same_ip = array();
-    $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    foreach($rows as $row){
-        $same_ip[] = "ip = '".$row["ip"]."'";
-    }
-    
-    $same_ip = implode(' OR ', $same_ip);
-
-    $stmt = exeSQL("SELECT * FROM ip_table WHERE ".$same_ip." ORDER BY ip");
+    // ログインユーザーのレコードを全て取得
+    $stmt = exeSQL("SELECT * FROM ip_table WHERE name = '".$_SESSION["name"]."' ORDER BY ip");
 
     // 全てのデータベースのデータを格納する配列を定義
     $all_data = array();

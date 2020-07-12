@@ -1,20 +1,10 @@
-const url = 'api.php'; // web APIのURL
+// const url = 'api.php'; // web APIのURL
 
 // APIを叩き、データベース情報を返す関数
 // 非同期通信で実行される関数
-async function callApi(fn) {
+async function callApi(url,fn) {
   const res = await fetch(url); //レスポンスを取得し、promiseを受け取る
   const users = await res.json(); //json形式に変換
+  console.log(users);
   fn(users); //非同期関数は必ずpromiseで返すのでコールバック関数を使用
-}
-
-// AjaxでPOST送信をする関数
-async function post(url, key, value, fn) {
-  const request = new FormData(); //フォームデータ作成
-  request.append(key, value);
-  console.log(request);
-  
-  const res = await fetch(url, { method: 'POST', body: request }); //postでrequestの内容を送信
-  console.log(res);
-  callApi(fn);
 }

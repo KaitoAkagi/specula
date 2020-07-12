@@ -60,18 +60,36 @@
     <!-- main -->
     <div class="container">
       <main>
-        <div class="text-center title">
-          <?php
-            printf("<h1>ようこそ ".$_SESSION["name"]." さん！</h1>");
-          ?>
+        <div class="text-center mt-5 mb-5">
+          <h2>ステータス画面</h2>
         </div>
 
-        <!-- ボタンの説明 -->
-        <div class="text-right">
-          <p>
-            <span class="mgr-10"> <i class="fas fa-circle" style="color: #78ff94;"></i>：ON </span>
-            <i class="fas fa-circle" style="color: #ff0000;"></i>：OFF
-          </p>
+        <!-- サーバーの利用状況をテーブルで表示 -->
+        <div class="table-responsive">
+          <!-- ボタンの説明 -->
+          <div class="text-right">
+            <p>
+              <span class="mgr-10"> <i class="fas fa-circle" style="color: #78ff94;"></i>：ON </span>
+              <i class="fas fa-circle" style="color: #ff0000;"></i>：OFF
+            </p>
+          </div>
+          <table class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th>IP</th>
+                <th>名前</th>
+                <th>最終アクセス</th>
+                <th>ステータス</th>
+              </tr>
+            </thead>
+            <tbody id="lists"></tbody>
+          </table>
+        </div>
+
+        <div class="text-center head-border">
+          <?php
+            printf("<h2 class='user-name'>- ".$_SESSION["name"]." -</h2>");
+          ?>
         </div>
 
         <!-- サーバーの利用状況をテーブルで表示 -->
@@ -80,12 +98,10 @@
             <thead>
               <tr>
                 <th>IP</th>
-                <th>名前</th>
-                <th>最終アクセス</th>
-                <th>状態</th>
+                <th>スイッチ</th>
               </tr>
             </thead>
-            <tbody id="lists"></tbody>
+            <tbody id="login-lists"></tbody>
           </table>
         </div>
       </main>
@@ -97,8 +113,12 @@
 
     <!-- webAPIを叩く -->
     <script src="call.js"></script>
-    <!-- 使用状況のテーブル -->
-    <script src="create_table.js"></script>
+    <!-- ログインユーザーと同じIPのユーザーを表示 -->
+    <script src="ip-same-users.js"></script>
+    <!-- ログインユーザーの使用状況を表示 -->
+    <script src="login-user.js"></script>
+    <!-- 同じサーバー(IP)を使用しているユーザーの使用状況のみ表示 -->
+    <script src="main.js"></script>
     <script
       src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
       integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"

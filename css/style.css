@@ -11,6 +11,7 @@ footer {
   width: 100%;
 }
 
+
 .login-box {
   padding: 30px 40px 30px 30px;
   border: solid 2px #dcdcdc;
@@ -40,6 +41,11 @@ footer {
 
 .table {
   max-width: 100vw;
+}
+
+.user-name {
+  padding-top: 30px;
+  padding-bottom: 10px;
 }
 
 .account-delete {
