@@ -9,7 +9,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>アカウントの基本情報</title>
+  <title>IPの変更</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet" />
@@ -17,17 +17,24 @@
 </head>
 
 <body>
-  <header>
+<header>
     <nav class="navbar navbar-expand-sm navbar-dark bg-dark mb-3">
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav4"
-        aria-controls="navbarNav4" aria-expanded="false" aria-label="Toggle navigation">
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarNav4"
+        aria-controls="navbarNav4"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
         <span class="navbar-toggler-icon"></span>
       </button>
-      <a class="navbar-brand" href="../index.php"><i class="fas fa-glasses"></i> Specula</a>
-      <div class="collapse navbar-collapse" name="navbarNav4">
+      <a class="navbar-brand" href="index.php"><i class="fas fa-glasses"></i> Specula</a>
+      <div class="collapse navbar-collapse" id="navbarNav4">
         <ul class="navbar-nav">
           <li class="nav-item dropdown">
-            <a href="#" class="nav-link dropdown-toggle" name="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               アカウント
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -47,20 +54,24 @@
       <div class="text-center mt-5 mb-5">
         <h2>IPを変更</h2>
       </div>
-      
-      <form method="POST" action="">
-        <div class="form-group row">
-          <div class="col-sm-10">
-            <input type="number" min="0" class="form-control" id='ip' name='ip' placeholder='IP'>
-          </div>
-          <button type='submit' class="btn btn-success col-sm-2" name='add'>追加</button>
-        </div>
-      </form>
 
       <form method="POST" action="">
         <div class="form-group row">
-          <div class="col-sm-10">
-            <select class="form-control" name="ip" name='ip'>
+          <div class="col-7 offset-1">
+            <input type="number" min="0" class="form-control" name='ip' placeholder='IP'>
+          </div>
+          <div class="col-3">
+            <button type='submit' class="btn btn-success w-100" name='add'>追加</button>
+          </div>
+        </div>
+      </form>
+
+      <br>
+
+      <form method="POST" action="">
+        <div class="form-group row">
+          <div class="col-7 offset-1">
+            <select class="form-control" name='ip'>
             <?php
               require "../../../database.php";
 
@@ -77,7 +88,9 @@
             ?>
             </select>
           </div>
-          <button type='submit' class="btn btn-danger col-sm-2" name='delete'>削除</button>
+          <div class="col-3">
+            <button type='submit' class="btn btn-danger w-100" name='delete'>削除</button>
+          </div>
         </div>
       </form>
 

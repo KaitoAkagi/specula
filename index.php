@@ -85,7 +85,7 @@
                         </div>
                     </div>
                     <div class="text-center">
-                        <button type="submit" class="btn btn-secondary center-button">ログイン</button>
+                        <button type="submit" class="btn btn-secondary w-100">ログイン</button>
                     </div>
                 </form>
             </div>
@@ -94,7 +94,7 @@
                 <p>ー 初めての方はこちら ー</p>
             </div>
             <div class="text-center">
-                <a class="btn btn-success center-button" href="register/" type="button">アカウント作成</a>
+                <a class="btn btn-success w-100" href="register/" type="button">アカウント作成</a>
             </div>
       </main>
     </div>

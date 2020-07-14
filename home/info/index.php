@@ -19,15 +19,22 @@
 <body>
   <header>
     <nav class="navbar navbar-expand-sm navbar-dark bg-dark mb-3">
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav4"
-        aria-controls="navbarNav4" aria-expanded="false" aria-label="Toggle navigation">
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarNav4"
+        aria-controls="navbarNav4"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
         <span class="navbar-toggler-icon"></span>
       </button>
       <a class="navbar-brand" href="../index.php"><i class="fas fa-glasses"></i> Specula</a>
-      <div class="collapse navbar-collapse" name="navbarNav4">
+      <div class="collapse navbar-collapse" id="navbarNav4">
         <ul class="navbar-nav">
           <li class="nav-item dropdown">
-            <a href="#" class="nav-link dropdown-toggle" name="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               アカウント
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -80,7 +87,7 @@
         <a href="update_ip"><i class="fas fa-edit"></i></a>
       </div>
 
-      <button class="btn btn-danger center-button account-delete" onclick="location.href='delete.php'">このアカウントを削除する</button>
+      <button class="btn btn-danger account-delete w-100" onclick="location.href='delete.php'">このアカウントを削除する</button>
 
       <?php
         if (isset($_POST["change"])) {

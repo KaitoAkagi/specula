@@ -9,7 +9,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>アカウントの基本情報</title>
+  <title>名前の変更</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet" />
@@ -19,21 +19,28 @@
 <body>
   <header>
     <nav class="navbar navbar-expand-sm navbar-dark bg-dark mb-3">
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav4"
-        aria-controls="navbarNav4" aria-expanded="false" aria-label="Toggle navigation">
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarNav4"
+        aria-controls="navbarNav4"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
         <span class="navbar-toggler-icon"></span>
       </button>
-      <a class="navbar-brand" href="../index.php"><i class="fas fa-glasses"></i> Specula</a>
-      <div class="collapse navbar-collapse" name="navbarNav4">
+      <a class="navbar-brand" href="../../index.php"><i class="fas fa-glasses"></i> Specula</a>
+      <div class="collapse navbar-collapse" id="navbarNav4">
         <ul class="navbar-nav">
           <li class="nav-item dropdown">
-            <a href="#" class="nav-link dropdown-toggle" name="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               アカウント
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="../">基本情報</a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="../logout.php">ログアウト</a>
+              <a class="dropdown-item" href="../../logout.php">ログアウト</a>
             </div>
           </li>
         </ul>
@@ -60,7 +67,7 @@
           <input type="text" class="form-control" name='new_name' placeholder='Name'>
         </div>
         <br>
-        <button type='submit' class="btn btn-success center-button" name='change' >変更する</button>
+        <button type='submit' class="btn btn-success w-100" name='change' >変更する</button>
       </form>
 
       <?php

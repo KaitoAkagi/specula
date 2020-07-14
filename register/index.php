@@ -18,7 +18,7 @@
         aria-controls="navbarNav4" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <a class="navbar-brand" href="index.php"><i class="fas fa-glasses"></i> Specula</a>
+      <a class="navbar-brand" href="../index.php"><i class="fas fa-glasses"></i> Specula</a>
       
     </nav>
   </header>
@@ -53,10 +53,7 @@
         <hr>
         <br>
         <div class='form-group'>
-          <div cass="form-inline">
-            <button type='button' class="btn btn-dark float-left" onclick="location.href='../index.php'">戻る</button>
-            <button type="submit" class="btn btn-success float-right offset-sm-8" name="register">登録</button>
-          </div>
+          <button type="submit" class="btn btn-success w-100" name="register">このアカウントを作成する</button>
         </div>
       </form>
 

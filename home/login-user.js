@@ -10,14 +10,20 @@ function loginUser(users) {
   });
 }
 
-// AjaxでPOST送信をする関数
-async function post(url, key, value) {
+// スイッチが押された時に2つのテーブルを更新する関数
+async function updateTables(url, key, value){
+
+  // post送信
   const request = new FormData(); //フォームデータ作成
   request.append(key, value);
-  console.log(request);
+  const res = await fetch(url, { method: 'POST', body: request });
+  
+  // ログインしているユーザーの使用状況を表示
+  callApi("api_login_user.php",loginUser);
 
-  const res = await fetch(url, { method: 'POST', body: request }); //postでrequestの内容を送信
-  console.log(res);
+  // 同じIPをもつユーザーの情報を表示
+  callApi("api.php",sameUsers);
+
 }
 
 // テーブルにログインユーザーを追加する関数
@@ -49,11 +55,9 @@ function addUser(user) {
     i.style.color = '#78FF94';
   }
   i.style.cursor = 'pointer';
+  // スイッチを押した時、テーブルを更新
   i.addEventListener('click', function () {
-    post('status.php', 'ip', user.ip);
-    // 2つのテーブルを非同期通信で更新する
-    callApi("api.php",sameUsers);
-    callApi("api_login_user.php",loginUser);
+    updateTables('status.php', 'ip', user.ip);
   });
   td[1].appendChild(i); //tdタグの下にiタグを入れる
 

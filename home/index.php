@@ -79,7 +79,7 @@
                 <th>IP</th>
                 <th>名前</th>
                 <th>最終アクセス</th>
-                <th>ステータス</th>
+                <th>状態</th>
               </tr>
             </thead>
             <tbody id="lists"></tbody>
