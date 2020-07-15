@@ -30,7 +30,7 @@
       >
         <span class="navbar-toggler-icon"></span>
       </button>
-      <a class="navbar-brand" href="index.php"><i class="fas fa-glasses"></i> Specula</a>
+      <a class="navbar-brand" href="../../index.php"><i class="fas fa-glasses"></i> Specula</a>
       <div class="collapse navbar-collapse" id="navbarNav4">
         <ul class="navbar-nav">
           <li class="nav-item dropdown">
