@@ -57,14 +57,14 @@
 
       <form method="POST" action="">
         <div class="form-group">
-          <label for="old_name">現在</label>
+          <label for="old_name">現在：</label>
           <?php
             echo("<input type='text' class='form-control' name='old_name' value='".$_SESSION['name']."' readonly>");
           ?>
         </div>
         <div class="form-group">
-          <label for="new_name">新規</label>
-          <input type="text" class="form-control" name='new_name' placeholder='Name'>
+          <label for="new_name">新規：</label>
+          <input type="text" class="form-control" name='new_name' placeholder='Name' required>
         </div>
         <br>
         <button type='submit' class="btn btn-success w-100" name='change' >変更する</button>
@@ -79,12 +79,8 @@
           $new_name = htmlspecialchars($_POST["new_name"]); //変更後のname
 
           // 名前が空欄のまま変更ボタンを押した場合
-          if (empty($new_name)) {
-              printf("<script>window.onload = function() {
-                alert('名前を入力して下さい');
-                }</script>");
-          // 名前が空欄の場合、ipを変更
-          } else {
+          if (!empty($new_name)) {
+            
             // 2つのテーブルの名前を変更
             $stmt = exeSQL("UPDATE user_table SET name = '".$new_name."' WHERE name = '".$_SESSION["name"]."'");
             $stmt = exeSQL("UPDATE ip_table SET name = '".$new_name."' WHERE name = '".$_SESSION["name"]."'");

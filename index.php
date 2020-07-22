@@ -75,13 +75,13 @@
                     <div class="form-group row">
                         <label for="name" class="col-sm-3 col-form-label">名前</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" name='name' placeholder='Name'>
+                            <input type="text" class="form-control" name='name' placeholder='Name' required>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="password" class="col-sm-3 col-form-label">パスワード</label>
                         <div class="col-sm-9">
-                            <input type="password" class="form-control" name='password' placeholder='Password'>
+                            <input type="password" class="form-control" name='password' placeholder='Password' required>
                         </div>
                     </div>
                     <div class="text-center">

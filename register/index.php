@@ -33,19 +33,19 @@
         <div class="form-group row">
           <label for="ip" class="col-sm-3 col-form-label">IP</label>
           <div class="col-sm-9">
-            <input type="number" min="0" class="form-control" id='ip' name='ip' placeholder='IP'>
+            <input type="text" class="form-control" id='ip' name='ip' pattern="\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}" placeholder='XXX.XXX.XXX.XXX' required>
           </div>
         </div>
         <div class="form-group row">
           <label for="name" class="col-sm-3 col-form-label">名前</label>
           <div class="col-sm-9">
-            <input type="text" class="form-control" id='name' name='name' placeholder='Name'>
+            <input type="text" class="form-control" id='name' name='name' placeholder='Name' required>
           </div>
         </div>
         <div class="form-group row">
           <label for="password" class="col-sm-3 col-form-label">パスワード</label>
           <div class="col-sm-9">
-            <input type="password" class="form-control" name='password' placeholder='Password'>
+            <input type="password" class="form-control" name='password' placeholder='Password' required>
           </div>
         </div>
 
@@ -59,6 +59,7 @@
 
       <?php
         require "../database.php";
+        require "../error_msg.php";
 
         session_start();
 
@@ -102,10 +103,6 @@
 
                   header("location: ../home");
                 }
-            } else {
-                printf("<script>window.onload = function() {
-                alert('未入力のデータがあります');
-                }</script>");
             }
         }
       ?>

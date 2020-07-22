@@ -72,8 +72,6 @@
                 } else {
                   error_msg("パスワードは半角英数字をそれぞれ1文字以上含んだ8文字以上で設定してください");
                 }
-            } else {
-                error_msg("パスワードを入力してください");
             }
         }
       ?>
@@ -81,7 +79,7 @@
       <form method="POST" action="">
         <div class="form-group">
           <label for="password">新しいパスワード：</label>
-          <input type="password" class="form-control" id="password" name='password' placeholder='Password'>
+          <input type="password" class="form-control" id="password" name='password' placeholder='Password' required>
         </div>
         <br>
         <button type='submit' class="btn btn-success w-100" name='change'>変更する</button>

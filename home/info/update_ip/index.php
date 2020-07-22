@@ -58,7 +58,7 @@
       <form method="POST" action="">
         <div class="form-group row">
           <div class="col-7 offset-1">
-            <input type="number" min="0" class="form-control" name='ip' placeholder='IP'>
+            <input type="text" class="form-control" name='ip' pattern="\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}" placeholder='XXX.XXX.XXX.XXX' required>
           </div>
           <div class="col-3">
             <button type='submit' class="btn btn-success w-100" name='add'>追加</button>
@@ -83,7 +83,7 @@
                 if ($rec == false) {
                     break;
                 }
-                printf("<option value='%s'>%s</option>", $rec["ip"], $rec["ip"]);
+                printf("<option value='%s' require>%s</option>", $rec["ip"], $rec["ip"]);
               }
             ?>
             </select>
@@ -99,11 +99,8 @@
           $ip = htmlspecialchars($_POST["ip"]); //変更後のip
 
           // ipが空欄のまま追加ボタンを押した場合
-          if (empty($ip)) {
-              printf("<script>window.onload = function() {
-                alert('IPを入力して下さい');
-                }</script>");
-          } else {
+          if (!empty($ip)) {
+            
             // テーブルip_tableにname,ipを追加
             $stmt = exeSQL("INSERT INTO ip_table (name,ip) values ('".$_SESSION["name"]."','".$ip."')");
             
@@ -113,11 +110,8 @@
             $ip = htmlspecialchars($_POST["ip"]); //削除するip
 
             // ipが空欄のまま削除ボタンを押した場合
-            if (empty($ip)) {
-                printf("<script>window.onload = function() {
-                    alert('IPを入力して下さい');
-                    }</script>");
-            } else {
+            if (!empty($ip)) {
+                
                 // テーブルip_tableから指定した名前・ipアドレスを削除
                 $stmt = exeSQL("DELETE FROM ip_table WHERE name = '".$_SESSION["name"]."' AND ip = '".$ip."' LIMIT 1");
                 
