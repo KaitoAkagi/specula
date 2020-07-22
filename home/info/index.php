@@ -64,6 +64,11 @@
       </div>
       <hr>
       <div class="wrapper">
+        <div class="bold item">パスワード</div>
+        <a href="update_pwd"><i class="fas fa-edit"></i></a>
+      </div>
+      <hr>
+      <div class="wrapper">
         <div class="bold item">IP</div>
         <div class="data">
           <?php

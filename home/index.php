@@ -112,7 +112,7 @@
     </footer>
 
     <!-- webAPIを叩く -->
-    <script src="call.js"></script>
+    <script src="call-api.js"></script>
     <!-- ログインユーザーと同じIPのユーザーを表示 -->
     <script src="ip-same-users.js"></script>
     <!-- ログインユーザーの使用状況を表示 -->
