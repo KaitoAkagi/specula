@@ -11,19 +11,17 @@ function loginUser(users) {
 }
 
 // スイッチが押された時に2つのテーブルを更新する関数
-async function updateTables(url, key, value){
-
+async function updateTables(url, key, value) {
   // post送信
   const request = new FormData(); //フォームデータ作成
   request.append(key, value);
   const res = await fetch(url, { method: 'POST', body: request });
-  
+
   // ログインしているユーザーの使用状況を表示
-  callApi("api_login_user.php",loginUser);
+  callApi('login_user_api.php', loginUser);
 
   // 同じIPをもつユーザーの情報を表示
-  callApi("api.php",sameUsers);
-
+  callApi('ip_same_users_api.php', sameUsers);
 }
 
 // テーブルにログインユーザーを追加する関数
@@ -49,7 +47,7 @@ function addUser(user) {
   if (user.status == 0) {
     i.classList.add('fa-toggle-off');
     i.style.color = '#FF0000';
-  // statusが1の時、状態ボタン=緑
+    // statusが1の時、状態ボタン=緑
   } else {
     i.classList.add('fa-toggle-on');
     i.style.color = '#78FF94';

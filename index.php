@@ -12,7 +12,7 @@
       crossorigin="anonymous"
     />
     <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet" />
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/styles.css" />
   </head>
 
   <body>
@@ -31,7 +31,7 @@
             </div>
 
             <?php
-              require "database.php";
+              require "dbconnect.php";
               require "error_msg.php";
 
               session_start();

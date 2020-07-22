@@ -1,5 +1,5 @@
  <?php
-      require "../../database.php";
+      require "../../dbconnect.php";
 
       session_start();
 

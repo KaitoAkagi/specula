@@ -21,7 +21,7 @@
       crossorigin="anonymous"
     />
     <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet" />
-    <link rel="stylesheet" href="../css/styles.css" />
+    <link rel="stylesheet" href="../../css/styles.css" />
   </head>
 
   <body>
@@ -39,7 +39,7 @@
         >
           <span class="navbar-toggler-icon"></span>
         </button>
-        <a class="navbar-brand" href="index.php"><i class="fas fa-glasses"></i> Specula</a>
+        <a class="navbar-brand" href="../"><i class="fas fa-glasses"></i> Specula</a>
         <div class="collapse navbar-collapse" id="navbarNav4">
           <ul class="navbar-nav">
             <li class="nav-item dropdown">
@@ -47,13 +47,13 @@
                 アカウント
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="info/">基本情報</a>
+                <a class="dropdown-item" href="../info/">基本情報</a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="logout.php">ログアウト</a>
+                <a class="dropdown-item" href="../logout.php">ログアウト</a>
               </div>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="table/">テーブル</a>
+            <li class="nav-item active">
+              <a class="nav-link" href="#">テーブル</a>
             </li>
           </ul>
         </div>
@@ -64,7 +64,7 @@
     <div class="container">
       <main>
         <div class="text-center mt-5 mb-5">
-          <h2>ステータス画面</h2>
+          <h2>全ユーザーの使用状況</h2>
         </div>
 
         <!-- サーバーの利用状況をテーブルで表示 -->
@@ -88,25 +88,6 @@
             <tbody id="lists"></tbody>
           </table>
         </div>
-
-        <div class="text-center head-border">
-          <?php
-            printf("<h2 class='user-name'>- ".$_SESSION["name"]." -</h2>");
-          ?>
-        </div>
-
-        <!-- サーバーの利用状況をテーブルで表示 -->
-        <div class="table-responsive">
-          <table class="table table-bordered table-striped">
-            <thead>
-              <tr>
-                <th>IP</th>
-                <th>スイッチ</th>
-              </tr>
-            </thead>
-            <tbody id="login-lists"></tbody>
-          </table>
-        </div>
       </main>
     </div>
 
@@ -115,12 +96,9 @@
     </footer>
 
     <!-- webAPIを叩く -->
-    <script src="call-api.js"></script>
-    <!-- ログインユーザーと同じIPのユーザーを表示 -->
-    <script src="ip-same-users.js"></script>
-    <!-- ログインユーザーの使用状況を表示 -->
-    <script src="login-user.js"></script>
-    <!-- 同じサーバー(IP)を使用しているユーザーの使用状況のみ表示 -->
+    <script src="../call-api.js"></script>
+    <!-- 全ユーザーの使用状況を表示 -->
+    <script src="all-users.js"></script>
     <script src="main.js"></script>
     <script
       src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
