@@ -1,1 +1,0 @@
-callApi("all_users_api.php", allUsers);
