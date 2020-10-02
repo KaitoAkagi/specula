@@ -1,12 +1,14 @@
 const login_lists = document.getElementById('login-lists');
+const login_name = document.getElementById('login-name');
 
-// ログインユーザーと同じIPを登録しているユーザーを表示する関数
-function loginUser(users) {
+// ログインユーザーの名前・IP・スイッチを表示する関数
+function showLoginUser(users) {
   // すでに表示してあるテーブルがある場合、そのテーブルを削除する
   if (login_lists.textContent) login_lists.textContent = null;
-  users.forEach(function (user) {
-    addUser(user);
-  });
+  if (login_name.textContent) login_name.textContent = null;
+
+  showName(users[0]);
+  showIpAndSwitch(users[0]);
 }
 
 // スイッチが押された時に2つのテーブルを更新する関数
@@ -20,11 +22,19 @@ async function updateTables(url, key, value) {
   callApi('../php/api.php?type=same_server_user', sameUsers);
 
   // ログインしているユーザーの使用状況を表示
-  callApi('../php/api.php?type=login_user', loginUser);
+  callApi('../php/api.php?type=login_user', showLoginUser);
 }
 
-// テーブルにログインユーザーを追加する関数
-function addUser(user) {
+// 名前を表示する関数
+function showName(user) {
+  const p = document.createElement('p')
+
+  p.innerText = user.name
+  login_name.appendChild(p)
+}
+
+// IPアドレスと使用状況を切り替えるスイッチを表示する関数
+function showIpAndSwitch(user) {
   const tr = document.createElement('tr');
   const td = Array(2); // tdタグを格納する配列
 
