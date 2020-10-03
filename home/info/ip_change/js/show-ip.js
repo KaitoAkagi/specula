@@ -1,11 +1,18 @@
-// ログインユーザーが登録しているIPアドレスを表示する関数
-function showIp(users) {
-  const registerd_ip = document.getElementById('registerd_ip');
-
+/**
+ * ログインユーザーが登録しているIPアドレスを表示する関数
+ * @param {array} users ログインユーザーのIPアドレスを格納する
+ */
+function showAllIp (users) {
   users.forEach(user => {
-    const option = document.createElement('option');
-    option.innerText = user.ip;
-    option.setAttribute('value', user.ip);
-    registerd_ip.appendChild(option);
-  });
+    showIp(user)
+  })
+}
+
+function showIp (user) {
+  const registerdIp = document.getElementById('registerd_ip')
+  const option = document.createElement('option')
+
+  option.innerText = user.ip
+  option.setAttribute('value', user.ip)
+  registerdIp.appendChild(option)
 }

@@ -14,7 +14,7 @@ session_start();
 
 try {
     if (!isset($_GET["type"])) {
-        throw new Exception("parameter is not defined");
+        throw new Exception("Invalid Access");
     }
 
     switch ($_GET["type"]) {
