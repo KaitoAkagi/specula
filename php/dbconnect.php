@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * データベースに接続してSQLを実行する。
+ * 
+ * @param string $sql
+ */
 function exeSQL($sql)
 {
     try {
