@@ -1,0 +1,6 @@
+{
+    "globals": {
+        "fetch": false
+    },
+    "extends": "standard"
+}

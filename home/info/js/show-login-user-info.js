@@ -1,23 +1,35 @@
-// テーブルにログインユーザーを追加する関数
-function showLoginUserInfo(users) {
-  showName(users[0]);
-  showIp(users);
+/**
+ * ログインユーザーの登録情報（名前・IP）を表示する関数
+ * @param {array} users ログインユーザーの名前・IPアドレスを格納する
+ */
+function showLoginUserInfo (users) {
+  showName(users[0])
+  showIp(users)
 }
 
-function showName(user) {
-  const login_name = document.getElementById('login-name');
-  login_name.innerText = user.name;
+/**
+ * ログインユーザーの名前を表示する関数
+ * @param {array} user ログインユーザーの名前・IPアドレスを格納する
+ */
+function showName (user) {
+  const loginName = document.getElementById('login-name')
+  loginName.innerText = user.name
 }
 
-function showIp(users) {
-  const login_ip = document.getElementById('login-ip');
-  let all_ip = ''; 
+/**
+ * ログインユーザーの登録しているIPアドレスを表示する関数
+ * @param {array} users ログインユーザーの名前・IPアドレスを格納する
+ */
+function showIp (users) {
+  const loginIp = document.getElementById('login-ip');
+  let allIp = ''
+
   for (let i = 0; i < users.length; i++) {
-    all_ip += users[i].ip
+    allIp += users[i].ip
     if (i < users.length - 1) {
-      all_ip += ', '
+      allIp += ', '
     }
   }
-  console.log(all_ip);
-  login_ip.innerText = all_ip
+
+  loginIp.innerText = allIp
 }

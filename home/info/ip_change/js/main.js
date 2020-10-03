@@ -1,1 +1,1 @@
-callApi('../../../php/api.php?type=login_user', showIp);
+callApi('../../../php/api.php?type=login_user', showAllIp)

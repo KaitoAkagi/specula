@@ -42,7 +42,7 @@ try {
 
     // テーブル"user_table"に名前とパスワードを追加
     $stmt = exeSQL("INSERT INTO user_table (name,password) values ('".$name."','".$password."')");
-    // テーブル"ip_table"に名前、ipと最終アクセス時間（time）を保存
+    // テーブル"ip_table"に名前、ipと最終アクセス日時時間（time）を保存
     $stmt = exeSQL("INSERT INTO ip_table (name,ip,time) values ('".$name."','".$ip."','".$time."')");
     $_SESSION['name'] = $name;
 

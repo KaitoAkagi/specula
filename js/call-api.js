@@ -6,8 +6,8 @@
  */
 
 async function callApi(url, fn) {
-  const res = await fetch(url); //レスポンスを取得し、promiseを受け取る
-  const dates = await res.json(); //json形式に変換
-  console.log(dates); //所得したデータをchrome devtoolsで確認
-  fn(dates);
+  const res = await fetch(url) // レスポンスを取得し、promiseを受け取る
+  const dates = await res.json() // json形式に変換
+  console.log(dates) // 所得したデータをchrome devtoolsで確認
+  fn(dates)
 }

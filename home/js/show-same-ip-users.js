@@ -1,34 +1,33 @@
 const lists = document.getElementById('lists')
 
 /**
- * 全てのユーザーの使用状況等を表示する関数
- * @param {array} users ユーザーの名前・IPアドレス・最終アクセス日時・状態を取得する
+ * ログインユーザーと同じサーバーのIPアドレスを登録しているユーザーを表示する関数
+ * @param {string} users APIから送られてきたユーザーの情報をJSON形式で受け取る
+ *
  */
-function showAllUsers(users) {
+function showSameIpUsers(users) {
   if (lists.textContent) lists.textContent = null
   users.forEach(function (user) {
-    showUser(user)
+    addUser(user)
   })
 }
 
 /**
- * ユーザーの名前・IP・最終アクセス日時・状態を表示する関数
- * @param {array} user ユーザーの名前・IP・最終アクセス日時・状態を取得する
+ *
+ * @param {array} user ユーザー情報（名前・IPアドレス・最終アクセス日時・使用状況）を要素とする配列
  */
-function showUser (user) {
+function addUser (user) {
   const tr = document.createElement('tr')
   const td = Array(4)
+  const i = document.createElement('i')
 
   for (let i = 0; i < td.length; i++) {
     td[i] = document.createElement('td')
   }
 
-  //   IP〜最終アクセス日時をtdタグで囲む
   td[0].innerText = user.ip
   td[1].innerText = user.name
   td[2].innerText = user.time
-
-  const i = document.createElement('i')
 
   // 状態ボタン●を表示
   i.classList.add('fas')
@@ -48,6 +47,5 @@ function showUser (user) {
   td.forEach(data => {
     tr.appendChild(data)
   })
-
   lists.appendChild(tr)
 }
